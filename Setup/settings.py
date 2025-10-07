@@ -137,9 +137,9 @@ LANGUAGES = [
     ('en', 'English'),
 ]
 
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
-]
+#LOCALE_PATHS = [
+   # BASE_DIR / 'locale',
+#]
 
 
 
