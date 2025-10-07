@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\INFORBAZ\Desktop\FLUBRIENGLISH\.venv"
+VIRTUAL_ENV="C:\Users\rossa\Desktop\En. Macundi\Projects\FLUBRIENGLISH\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
