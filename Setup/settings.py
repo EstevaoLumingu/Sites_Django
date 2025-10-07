@@ -132,14 +132,7 @@ USE_L10N = True
 
 from django.utils.translation import gettext_lazy as _
 
-LANGUAGES = [
-    ('pt-pt', 'Português'),
-    ('en', 'English'),
-]
 
-#LOCALE_PATHS = [
-   # BASE_DIR / 'locale',
-#]
 
 
 
