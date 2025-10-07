@@ -3,6 +3,8 @@ import dj_database_url
 from pathlib import Path
 from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
+from django.core.management.utils import get_random_secret_key
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
@@ -156,6 +158,7 @@ LOGOUT_REDIRECT_URL = 'home'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+STATICFILES_DIRS = [BASE_DIR / 'static']
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
