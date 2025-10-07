@@ -1,0 +1,93 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-2 mb-2">
+    <div class="card shadow-lg p-4">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <!-- Foto de perfil -->
+                <div class="col-md-4 text-center">
+                    <div class="mb-3">
+                        <img id="preview-image"
+                             src="{% if user_obj.foto_perfil %}{{ user_obj.foto_perfil.url }}{% else %}{% static 'img/default_avatar.png' %}{% endif %}"
+                             class="img-thumbnail rounded-circle"
+                             style="width: 200px; height: 200px; object-fit: cover;">
+                    </div>
+                    <label class="form-label">Foto de perfil</label>
+                    {{ form.foto_perfil }}
+                </div>
+
+                <!-- Informações do usuário -->
+                <div class="col-md-8">
+                    <h3 class="mb-4">Informações do Perfil</h3>
+                    <div class="row g-3">
+                        {% for field in form %}
+                            {% if field.name != 'foto_perfil' %}
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-4 d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalSenha">
+                            Alterar Senha
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Alterar Senha -->
+<div class="modal fade" id="modalSenha" tabindex="-1" aria-labelledby="modalSenhaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" action="{% url 'alterar_senha' %}">
+        {% csrf_token %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSenhaLabel">Alterar Senha</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Senha Atual</label>
+                    <input type="password" name="old_password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nova Senha</label>
+                    <input type="password" name="new_password1" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Confirmar Nova Senha</label>
+                    <input type="password" name="new_password2" class="form-control" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Atualizar Senha</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    const input = document.getElementById("id_foto_perfil");
+    const preview = document.getElementById("preview-image");
+
+    input?.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "main/base.html" %}
+{% block title %}Avaliar Participação{% endblock %}
+{% load participacao_tags %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-primary"><i class="fas fa-star"></i> Avaliar Participação - {{ aula.titulo }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Aluno</th>
+          <th>Avaliação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for aluno in alunos %}
+        <tr>
+          <td>{{ aluno.get_full_name|default:aluno.username }}</td>
+          <td>
+            <select name="avaliacao_{{ aluno.id }}" class="form-select">
+              <option value="">-- selecione --</option>
+              <option value="pessimo" {% if avaliacoes.aluno.id == 'pessimo' %}selected{% endif %}>Péssimo</option>
+              <option value="ruim" {% if avaliacoes.aluno.id == 'ruim' %}selected{% endif %}>Ruim</option>
+              <option value="bom" {% if avaliacoes.aluno.id == 'bom' %}selected{% endif %}>Bom</option>
+              <option value="muito_bom" {% if avaliacoes.aluno.id == 'muito_bom' %}selected{% endif %}>Muito Bom</option>
+              <option value="excelente" {% if avaliacoes.aluno.id == 'excelente' %}selected{% endif %}>Excelente</option>
+            </select>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Salvar Avaliações</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

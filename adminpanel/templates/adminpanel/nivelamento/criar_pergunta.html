@@ -1,0 +1,150 @@
+{% extends "main/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Nova Pergunta – Nivelamento{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+   <h2 class="text-primary mb-4 d-flex justify-content-between align-items-center">
+  <span><i class="fas fa-pencil-alt"></i> Criar Pergunta de Nivelamento</span>
+  <button id="gerar-pergunta-btn" type="button" class="btn btn-outline-primary ms-auto"
+          data-url="{% url 'gerar_pergunta_ia' %}">
+    <i class="fas fa-magic"></i> Gerar com IA
+  </button>
+</h2>
+
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <!-- Curso e Nível -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Curso</label>
+          {{ pergunta_form.curso|add_class:"form-select" }}
+          {% for e in pergunta_form.curso.errors %}
+            <div class="text-danger small">{{ e }}</div>
+          {% endfor %}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Nível</label>
+          {{ pergunta_form.nivel|add_class:"form-select" }}
+          {% for e in pergunta_form.nivel.errors %}
+            <div class="text-danger small">{{ e }}</div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Pergunta -->
+      <div class="mb-4">
+        <label class="form-label fw-bold">Enunciado</label>
+        {{ pergunta_form.pergunta|add_class:"form-control form-control-lg" }}
+        {% for e in pergunta_form.pergunta.errors %}
+          <div class="text-danger small">{{ e }}</div>
+        {% endfor %}
+      </div>
+
+      <hr>
+      <h4 class="mt-4 text-secondary">
+        <i class="fas fa-check-circle"></i> Respostas possíveis
+      </h4>
+
+      {{ resposta_formset.management_form }}
+
+      {% for form in resposta_formset %}
+        {{ form.id }}  {# Campo oculto obrigatório para edição #}
+        <div class="row align-items-center mb-3 p-3 bg-light rounded shadow-sm">
+          <div class="col-auto">
+            <div class="form-check form-switch">
+              {{ form.correta|add_class:"form-check-input" }}
+              <label class="form-check-label">Correta?</label>
+            </div>
+          </div>
+          <div class="col">
+            {{ form.texto|add_class:"form-control" }}
+            {% for e in form.texto.errors %}
+              <div class="text-danger small">{{ e }}</div>
+            {% endfor %}
+          </div>
+          {% if form.DELETE %}
+            <div class="col-auto ms-3">
+              <div class="form-check">
+                {{ form.DELETE }} <label class="form-check-label text-danger">Excluir</label>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-success me-2">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <a href="{% url 'listar_perguntas_nivelamento' %}" class="btn btn-outline-secondary">
+          <i class="fas fa-times"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .form-control-lg {
+    padding: 0.75rem;
+  }
+  .form-check-label {
+    margin-left: 0.3rem;
+  }
+</style>
+
+<script>
+ document.getElementById("gerar-pergunta-btn").addEventListener("click", async function () {
+  const curso = document.querySelector("select[name='curso']").value;
+  const nivel = document.querySelector("select[name='nivel']").value;
+  const urlBase = this.dataset.url;
+
+  if (!curso || !nivel) {
+    alert("Por favor, selecione o curso e o nível antes de gerar.");
+    return;
+  }
+
+  this.disabled = true;
+  this.innerHTML = "⏳ Gerando com IA...";
+
+  try {
+    const res = await fetch(`${urlBase}?curso=${curso}&nivel=${nivel}`);
+    const data = await res.json();
+
+    if (data.erro) {
+      alert(data.erro);
+    } else {
+      // Preenche campos do form
+      document.querySelector("textarea[name='pergunta']").value = data.pergunta;
+
+      const respostas = document.querySelectorAll("input[name$='texto']");
+      const corretas = document.querySelectorAll("input[type='checkbox'][name$='correta']");
+
+      data.respostas.forEach((resposta, index) => {
+        if (respostas[index]) {
+          respostas[index].value = resposta.texto;
+          corretas[index].checked = resposta.correta;
+        }
+      });
+    }
+
+  } catch (err) {
+    alert("Erro ao gerar pergunta com IA.");
+    console.error(err);
+  } finally {
+    this.disabled = false;
+    this.innerHTML = '<i class="fas fa-magic"></i> Gerar com IA';
+  }
+});
+
+</script>
+
+{% endblock %}

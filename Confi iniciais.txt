@@ -1,0 +1,49 @@
+cd C:\Users\HP\Desktop\Projecto_Final\MGMQ
+
+py -3.11 -m venv new_env
+
+.\new_env\Scripts\activate
+python manage.py runserver
+
+
+cd C:\Users\Eng. Macundi Jr\Desktop\Projecto_Final\MGMQ
+
+py -3.11 -m venv new_env
+
+.\new_env\Scripts\activate
+
+python manage.py runserver
+
+python manage.py makemigrations SIGM1
+
+
+
+ 
+python -m venv venv
+python -m django startproject MGMQ
+
+django-admin startproject SIGM
+
+python manage.py runserver
+ 
+SET FOREIGN_KEY_CHECKS = 0;
+SET SQL_SAFE_UPDATES = 1;
+
+primeira vez:
+
+django-admin startproject SIGM1
+cd SIGM1
+
+(django-admin startproject nome_do_projecto
+cd nome_do_projecto)
+
+python manage.py showmigrations SIGM1
+
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+
+DJLYE-XHJ5W-XZP6C-VASLJ-CRK8G codigo msn
+

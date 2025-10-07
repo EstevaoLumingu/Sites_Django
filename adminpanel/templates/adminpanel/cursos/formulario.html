@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+{% block title %}{{ titulo|default:"Curso" }}{% endblock %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow p-4 mx-auto" style="max-width: 700px;">
+    <h4 class="mb-4 text-primary">
+      <i class="fas fa-plus-circle"></i> {{ titulo|default:"Novo Curso" }}
+    </h4>
+
+    <!-- Mensagens Globais (Sucesso/Erro) -->
+
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="id_nome">Nome do Curso</label>
+        {% if form.nome.errors %}
+          {{ form.nome|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            {{ form.nome.errors.0 }}
+          </div>
+        {% else %}
+          {{ form.nome|add_class:"form-control" }}
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_descricao">Descrição</label>
+        {% if form.descricao.errors %}
+          {{ form.descricao|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            {{ form.descricao.errors.0 }}
+          </div>
+        {% else %}
+          {{ form.descricao|add_class:"form-control" }}
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_imagem">Imagem (opcional)</label>
+        {% if form.imagem.errors %}
+          {{ form.imagem|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            {{ form.imagem.errors.0 }}
+          </div>
+        {% else %}
+          {{ form.imagem|add_class:"form-control" }}
+        {% endif %}
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-success">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <a href="{% url 'listar_cursos_admin' %}" class="btn btn-outline-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+{% block title %}Salas Disponíveis{% endblock %}
+{% block content %}
+<h2>Salas Disponíveis</h2>
+<div class="row">
+    {% for sala in salas %}
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5>{{ sala.titulo }}</h5>
+                    <p><strong>Curso:</strong> {{ sala.curso.nome }}</p>
+                    <p><strong>Nível:</strong> {{ sala.get_nivel_display }}</p>
+                    <p><strong>Início:</strong> {{ sala.data_inicio }}</p>
+                    <p><strong>Professor:</strong> {{ sala.professor.get_full_name }}</p>
+                    <p><strong>Alunos:</strong> {{ sala.alunos.count }}</p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Nenhuma sala disponível.</p>
+    {% endfor %}
+</div>
+{% endblock %}

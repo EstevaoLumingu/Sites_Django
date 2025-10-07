@@ -1,0 +1,59 @@
+{% extends "main/base.html" %}
+{% block title %}Aulas da Sala{% endblock %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-primary"><i class="fas fa-video"></i> Aulas da Sala "{{ sala.titulo }}"</h2>
+  <p class="text-muted">Curso: {{ sala.curso.nome }} | Nível: {{ sala.get_nivel_display }}</p>
+
+  {% if aulas %}
+    <div class="table-responsive mt-4">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Título</th>
+            <th>Data e Hora</th>
+            <th>Link de Acesso</th>
+            {% if user.categoria == 'professor' %}
+              <th class="text-center">Ações</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for aula in aulas %}
+          <tr>
+            <td>{{ aula.titulo }}</td>
+            <td>{{ aula.horario|date:"d/m/Y H:i" }}</td>
+            <td>
+              <a href="{% url 'entrar_aula' aula.slug_sala %}" class="btn btn-sm btn-outline-primary">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+              </a>
+            </td>
+            {% if user.categoria == 'professor' %}
+            <td class="text-center">
+              <a href="{% url 'editar_aula' aula.id %}" class="btn btn-sm btn-warning me-2">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="{% url 'remover_aula' aula.id %}" class="btn btn-sm btn-danger"
+                 onclick="return confirm('Tem certeza que deseja remover esta aula?');">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+            {% endif %}
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center text-muted">Nenhuma aula encontrada para esta sala.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info mt-4">
+      <i class="fas fa-info-circle"></i> Nenhuma aula disponível para esta sala ainda.
+    </div>
+  {% endif %}
+
+{% endblock %}

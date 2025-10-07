@@ -1,0 +1,107 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Painel do Aluno{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2 class="mb-4 text-center text-primary" data-aos="fade-down">
+    🎓 Meu Painel do Aluno
+  </h2>
+
+  <div class="row gx-4 gy-4 justify-content-center">
+
+    <!-- Minhas Salas (ativos) -->
+    <div class="col-md-4" data-aos="fade-right">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-warning text-dark">
+          <i class="fas fa-door-open"></i> Minhas Salas
+        </div>
+        <div class="card-body d-flex flex-column">
+          {% if salas %}
+            {% for sala in salas %}
+              <div class="mb-4">
+                <h5>{{ sala.titulo }}</h5>
+                <p class="mb-1">Curso: <strong>{{ sala.curso.nome }}</strong></p>
+                <p class="mb-1">Professor: <strong>{{ sala.professor.get_full_name|default:sala.professor.username }}</strong></p>
+                <p class="mb-1">Nível: <span class="badge bg-success">{{ sala.get_nivel_display }}</span></p>
+                <p class="mb-1">Colegas: <span class="badge bg-info">{{ sala.alunos.count }}</span></p>
+                  <a href="{% url 'painel_sala' sala.id %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-sign-in-alt"></i> Entrar na Sala
+                        </a>
+
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">🚫 Nenhuma sala atribuída.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+<!-- Meus Cursos — corrigido para mostrar 1 curso por sala (curso + nível) -->
+<div class="col-md-4" data-aos="fade-up">
+  <div class="card shadow-sm h-100">
+    <div class="card-header bg-success text-white">
+      <i class="fas fa-book-reader"></i> Meus Cursos
+    </div>
+    <div class="card-body d-flex flex-column">
+      {% if salas %}
+        {% for sala in salas %}
+          <div class="mb-4">
+            <h5>{{ sala.curso.nome }} <small class="text-muted">({{ sala.get_nivel_display }})</small></h5>
+            <p class="mb-1 text-muted">{{ sala.curso.descricao|truncatewords:15 }}</p>
+            <a href="{% url 'painel_sala' sala.id %}" class="btn btn-sm btn-outline-success">Ver Curso</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted">🚫 Não estás matriculado em nenhum curso.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+    <!-- Próximas Aulas -->
+    <div class="col-md-4" data-aos="fade-left">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-danger text-white">
+          <i class="fas fa-video"></i> Próximas Aulas ao Vivo
+        </div>
+        <div class="card-body d-flex flex-column">
+          {% if aulas %}
+            {% for aula in aulas %}
+              <div class="mb-4">
+                <h5>{{ aula.titulo }}</h5>
+                <small class="text-muted">📅 {{ aula.horario|date:"d/m/Y H:i" }}</small><br>
+                <a href="{% url 'entrar_aula' aula.slug_sala %}" class="btn btn-sm btn-outline-danger mt-2">
+                  Entrar na Aula
+                </a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">🚫 Nenhuma aula agendada.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Botão Explorar Cursos -->
+  <div class="text-center mt-5" data-aos="zoom-in-up">
+    <a href="{% url 'cursos_disponiveis' %}" class="btn btn-lg btn-primary shadow">
+      <i class="fas fa-search"></i> Explorar Cursos Disponíveis
+    </a>
+  </div>
+</div>
+
+<style>
+  .card { border-radius: 12px; }
+  .shadow-sm { transition: transform .3s ease, box-shadow .3s ease; }
+  .shadow-sm:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  .badge { font-size: .9rem; }
+  .card-header { font-size: 1.1rem; }
+</style>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% load static %}
+<div class="container py-0">
+  <h5 class="mb-1 text-primary"><i class="fas fa-user-circle"></i> {{ colega.get_full_name|default:colega.username }}</h5>
+
+  <div id="chat-box" class="border rounded shadow-sm p-1 mb-1 bg-light" style="height: 340px; overflow-y: auto;">
+    {% for msg in mensagens %}
+      <div class="mb-2 d-flex {% if msg.remetente == user %}justify-content-end{% else %}justify-content-start{% endif %}">
+        <div class="p-2 rounded shadow-sm {% if msg.remetente == user %}bg-primary text-white{% else %}bg-white{% endif %}"
+             style="max-width: 75%; word-wrap: break-word;">
+          {% if msg.tipo == 'texto' %}
+            <p class="mb-1">{{ msg.conteudo }}</p>
+          {% elif msg.tipo == 'imagem' %}
+            <img src="{{ msg.arquivo.url }}" class="img-fluid rounded" alt="Imagem">
+          {% elif msg.tipo == 'audio' %}
+            <audio controls><source src="{{ msg.arquivo.url }}" type="audio/mpeg"></audio>
+          {% elif msg.tipo == 'video' %}
+            <video controls width="250"><source src="{{ msg.arquivo.url }}" type="video/mp4"></video>
+          {% endif %}
+          <small class="text-muted d-block text-end" style="font-size: 0.75rem;">{{ msg.criada_em|date:"H:i" }}</small>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form id="form-mensagem" method="post" enctype="multipart/form-data" class="shadow-sm p-3 bg-white rounded">
+    {% csrf_token %}
+    <div class="row g-2">
+      <div class="col-md-8 col-12">
+        <input type="text" name="conteudo" class="form-control" placeholder="Escreva sua mensagem..." autofocus required>
+      </div>
+      <div class="col-md-2 col-6">
+        <input type="file" name="arquivo" class="form-control">
+      </div>
+      <div class="col-md-2 col-6">
+        <button type="submit" class="btn btn-success w-100">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+    <input type="hidden" name="tipo" value="texto">
+    <input type="hidden" name="destinatario" value="{{ colega.id }}">
+  </form>
+</div>
+
+<script>
+  const chatBox = document.getElementById("chat-box");
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  document.getElementById("form-mensagem").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const file = data.get("arquivo");
+    if (file && file.size > 0) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      const tipo = ['jpg','jpeg','png','gif'].includes(ext) ? 'imagem' :
+                   ['mp3','wav'].includes(ext) ? 'audio' :
+                   ['mp4','webm'].includes(ext) ? 'video' : null;
+      if (!tipo) return alert("Formato de arquivo não suportado.");
+      data.set("tipo", tipo);
+    } else {
+      data.set("tipo", "texto");
+    }
+
+    const resp = await fetch("{% url 'enviar_mensagem' %}", {
+      method: "POST",
+      headers: { 'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value },
+      body: data
+    });
+    const json = await resp.json();
+    if (json.status === "ok") {
+      const html = `
+        <div class="mb-3 d-flex justify-content-end">
+          <div class="p-2 rounded shadow-sm bg-primary text-white" style="max-width:75%;word-wrap:break-word;">
+            ${ json.tipo === 'texto' ? `<p class="mb-1">${json.conteudo}</p>` : '' }
+            ${ json.tipo === 'imagem' ? `<img src="${json.arquivo_url}" class="img-fluid rounded">` : '' }
+            ${ json.tipo === 'audio' ? `<audio controls><source src="${json.arquivo_url}" type="audio/mpeg"></audio>` : '' }
+            ${ json.tipo === 'video' ? `<video controls width="250"><source src="${json.arquivo_url}" type="video/mp4"></video>` : '' }
+            <small class="text-muted d-block text-end" style="font-size:0.75rem;">${json.hora}</small>
+          </div>
+        </div>`;
+      chatBox.insertAdjacentHTML('beforeend', html);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      form.reset();
+    }
+  });
+</script>
+

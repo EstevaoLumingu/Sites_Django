@@ -1,0 +1,88 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load custom_tags %}
+{% block title %}Cursos Disponíveis{% endblock %}
+
+{% block content %}
+<div class="container my-2">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold"><i class="fas fa-book-open text-primary"></i> Cursos Disponíveis</h2>
+    <p class="text-muted">Escolha o nível e curso para iniciar o seu percurso!</p>
+  </div>
+
+  {% if salas %}
+    <div class="row g-4 justify-content-center">
+      {% for sala in salas %}
+        <div class="col-md-4">
+          <div class="card shadow-sm d-flex flex-row overflow-hidden hover-zoom h-100">
+            <div style="width: 250px;">
+              {% if sala.curso.imagem %}
+                <img src="{{ sala.curso.imagem.url }}" alt="Imagem do curso" style="height: 100%; width: 100%; object-fit: cover;">
+              {% else %}
+                <img src="{% static 'placeholder/course-default.jpg' %}" alt="Imagem do curso" style="height: 80%; width: 100%; object-fit: cover;">
+              {% endif %}
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="fw-bold">{{ sala.curso.nome }} — {{ sala.get_nivel_display }}</h5>
+              <p class="text-muted">{{ sala.curso.descricao|truncatewords:20 }}</p>
+
+              <p class="mb-1 small"><i class="fas fa-user-graduate"></i> Alunos inscritos: {{ sala.num_alunos }}</p>
+              <p class="mb-1 small"><i class="fas fa-user-tie"></i> Professor: {{ sala.professor.get_full_name|default:sala.professor.username }}</p>
+              <p class="mb-1 small"><i class="fas fa-calendar-alt"></i> {{ sala.data_inicio|date:"d/m/Y" }} – {{ sala.data_fim|date:"d/m/Y" }}</p>
+
+              <div class="mt-auto text-end">
+                {% in_matriculas sala.curso.id sala.nivel matriculas_ids as ja_inscrito %}
+                {% if ja_inscrito %}
+                  <span class="badge bg-success">
+                    <i class="fas fa-check-circle"></i> Já inscrito
+                  </span>
+                {% else %}
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNivelamento{{ sala.id }}">
+                    <i class="fas fa-pencil-alt"></i> Matricular-se
+                  </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Teste Nivelamento -->
+        <div class="modal fade" id="modalNivelamento{{ sala.id }}" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="fas fa-tasks"></i> Teste de Nivelamento</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body text-center">
+                <p>Antes de se inscrever no curso <strong>{{ sala.curso.nome }}</strong> no nível <strong>{{ sala.get_nivel_display }}</strong>, é necessário fazer um teste rápido de nivelamento.</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="{% url 'fazer_teste' sala.curso.id %}" class="btn btn-primary">
+                  Iniciar Teste
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle"></i> Nenhuma sala disponível no momento.
+    </div>
+  {% endif %}
+</div>
+
+<style>
+.hover-zoom {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.hover-zoom:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

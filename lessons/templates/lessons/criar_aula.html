@@ -1,0 +1,90 @@
+{% extends "main/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Criar Nova Aula{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-lg p-4">
+    <h2 class="mb-4 text-primary"><i class="fas fa-chalkboard-teacher"></i> Criar Nova Aula</h2>
+
+    {% if conflito and sugestao_titulo %}
+      <div class="alert alert-warning d-flex justify-content-between align-items-center">
+        <div>
+          <i class="fas fa-exclamation-circle me-2"></i>
+          Aula com esse nome já existe. Desejas renomear automaticamente como:
+          <strong>{{ sugestao_titulo }}</strong>?
+        </div>
+        <div class="d-flex gap-2">
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="confirmar_renomear" value="1">
+            <input type="hidden" name="titulo_original" value="{{ titulo_original }}">
+            <input type="hidden" name="titulo" value="{{ sugestao_titulo|stringformat:'s' }}">
+            <input type="hidden" name="classroom" value="{{ form.classroom.value|stringformat:'s' }}">
+            <input type="hidden" name="descricao" value="{{ form.descricao.value }}">
+            <input type="hidden" name="horario" value="{{ form.horario.value }}">
+          
+          </form>
+         
+        </div>
+      </div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Sala</label>
+          {{ form.classroom|add_class:"form-select" }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Título da Aula</label>
+          {{ form.titulo|add_class:"form-control" }}
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-semibold">Descrição</label>
+          {{ form.descricao|add_class:"form-control" }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Data e Hora</label>
+          {{ form.horario|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-success me-2">
+          <i class="fas fa-check-circle"></i> Criar Aula
+        </button>
+        <a href="{% url 'painel_sala' sala_id=form.classroom.value %}" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .card {
+    border-radius: 12px;
+  }
+  .form-label {
+    font-weight: 600;
+  }
+</style>
+
+<script>
+
+  function focarTituloCampo() {
+    setTimeout(() => {
+      const campo = document.querySelector('[name="titulo"]');
+      if (campo) {
+        campo.focus();
+        campo.classList.add("border-warning", "border-2");
+        campo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        alert("Campo de título não encontrado.");
+      }
+    }, 100); // pequeno delay garante renderização
+  }
+</script>
+{% endblock %}

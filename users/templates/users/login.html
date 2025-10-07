@@ -1,0 +1,386 @@
+{% extends "main/base.html" %}
+
+{% block title %}Bem-vindo à Fluent Bridge English Online{% endblock %}
+
+{% block content %}
+
+
+<!-- Carrossel de fundo com banner sobreposto -->
+<div id="heroCarrossel" class="position-relative mb-4">
+  <!-- Carrossel real -->
+  <div id="carrosselIA" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner rounded-3 shadow">
+      <div class="carousel-item active">
+        <img src="{{ MEDIA_URL }}carrossel/slide1.jpg" class="d-block w-100" alt="Slide 1">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ MEDIA_URL }}carrossel/slide2.jpg" class="d-block w-100" alt="Slide 2">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ MEDIA_URL }}carrossel/slide3.jpg" class="d-block w-100" alt="Slide 3">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ MEDIA_URL }}carrossel/slide4.jpg" class="d-block w-100" alt="Slide 3">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrosselIA" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carrosselIA" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Banner central + botão -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white p-3">
+   <h3 id="typewriter" class="display-5 mb-3"></h3>
+    <p class="lead mb-4">Cursos interativos, aulas em vídeo e professores ao vivo. Começa já!</p>
+
+    <!-- Caixa de login -->
+    <div class="login-wrapper">
+      <div class="login-box">
+        <h4 class="login-title"><i class="fas fa-lock"></i> Login</h4>
+        <form method="post" class="login-form">
+  {% csrf_token %}
+  <div class="mb-2 d-flex align-items-center gap-2">
+    <label for="username" class="form-label text-dark mb-0" style="min-width: 100px;">
+      <i class="fas fa-user text-info"></i> Usuário
+    </label>
+    <input type="text" class="form-control form-control-sm flex-grow-1" id="username" name="username" placeholder="Seu usuário" required>
+  </div>
+
+  <div class="mb-2 d-flex align-items-center gap-2">
+    <label for="password" class="form-label text-dark mb-0" style="min-width: 100px;">
+      <i class="fas fa-key text-info"></i> Senha
+    </label>
+    <input type="password" class="form-control form-control-sm flex-grow-1" id="password" name="password" placeholder="Sua senha" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-sm w-100">
+    <i class="fas fa-sign-in-alt"></i> Entrar
+  </button>
+
+  <div class="text-center mt-1">
+    <a href="#">Esqueceu a senha?</a><br/>
+    <a href="register" class="text-success">Registrar-se</a>
+  </div>
+</form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Secção Destaques com Cards reais -->
+<section id="destaques" class="container my-3">
+  <div class="text-center mb-5" >
+    <h2 class="fw-bold"> O que você encontra aqui?</h2>
+    <p class="text-muted">Recursos exclusivos para facilitar sua aprendizagem online.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-4" data-aos="zoom-in-up">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ MEDIA_URL }}destaques/d1.jpg" class="card-img-top" alt="Professores ao Vivo">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-chalkboard-teacher text-primary"></i> Professores ao Vivo</h5>
+          <p class="card-text">Participe de aulas em tempo real, interaja e receba suporte individualizado de professores especializados.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in-up">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ MEDIA_URL }}destaques/d2.jpg" class="card-img-top" alt="Plataforma Moderna">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-laptop-code text-success"></i> Plataforma Moderna</h5>
+          <p class="card-text">Acesse aulas e materiais didáticos de qualquer lugar, em qualquer dispositivo. Totalmente responsivo e seguro.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in-up">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ MEDIA_URL }}destaques/d3.jpg" class="card-img-top" alt="Vídeo Aulas Gravadas">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-video text-danger"></i> Vídeo Aulas Gravadas</h5>
+          <p class="card-text">Revise suas aulas a qualquer hora, faça anotações e aprenda no seu ritmo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mural de Informações -->
+<section id="mural" class="container my-5">
+  <div class="text-center mb-4" data-aos="fade-up">
+    <h2 class="fw-bold">Por que aprender inglês com a Fluent Bridge English?</h2>
+    <p class="text-muted">Desbloqueie oportunidades, conecte-se ao mundo e fale com confiança.</p>
+  </div>
+  <div class="row text-center g-4">
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h5 class="fw-bold"><i class="fas fa-globe text-primary"></i> +200 Países</h5>
+        <p>Fale inglês e comunique-se com pessoas de todo o mundo sem barreiras.</p>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h5 class="fw-bold"><i class="fas fa-briefcase text-success"></i> Oportunidades Profissionais</h5>
+        <p>Tenha acesso às melhores vagas de emprego e crescimento internacional.</p>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h5 class="fw-bold"><i class="fas fa-book-reader text-danger"></i> Aprenda no seu ritmo</h5>
+        <p>Estude de forma flexível, com professores ao vivo e materiais gravados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>  
+  .carousel-caption {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background: rgba(0, 0, 0, 0.3);
+  }
+    body {
+    
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+      /* Wrapper da caixa */
+.login-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 400px; /* largura máxima do card */
+  width: 90%;
+  box-sizing: border-box;
+}
+
+/* Caixa compacta */
+.login-box {
+  position: relative;
+  width: 350px;
+  height: 60px;
+  background: linear-gradient(90deg, rgb(64, 123, 242), rgb(80, 161, 247));
+  border-radius: 15px;
+  overflow: hidden; /* luz pode sair */
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* Hover: formato card horizontal COM TAMANHOS REDUZIDOS */
+.login-wrapper:hover .login-box {
+  width: 100%;
+  min-height: 200px;   /* altura reduzida */
+  max-height: 250px;   /* altura máxima */
+  padding: 20px;       /* menos espaço interno */
+  background: #fff;
+  color: #00ccff;
+  box-shadow: 0 0 40px #3654ee;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  border-radius: 20px;
+}
+
+/* Neon efeito */
+.login-box::before,
+.login-box::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  z-index: -1;
+  border-radius: 25px;
+  background: conic-gradient(
+    from 0deg,
+    #00f7ff,
+    #ff00ff,
+    #00f7ff,
+    #ff00ff
+  );
+  animation: rotateNeon 3s linear infinite;
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.login-box::after {
+  animation-direction: reverse;
+}
+
+.login-wrapper:hover .login-box::before,
+.login-wrapper:hover .login-box::after {
+  opacity: 1;
+}
+
+/* Título compacto */
+.login-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-wrapper:hover .login-title {
+  display: none;
+}
+
+/* Formulário compacto */
+.login-form {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;   /* menos espaçamento entre campos */
+  margin-top: 5px;
+}
+
+.login-wrapper:hover .login-form {
+  display: flex;
+}
+
+.login-form .form-label {
+  font-size: 0.8rem;  /* labels menores */
+  margin-bottom: 2px;
+}
+
+.login-form .form-control {
+  font-size: 0.85rem; /* input menor */
+  padding: 0.3rem 0.5rem;
+}
+
+.login-form .btn {
+  font-size: 0.9rem;  /* botão menor */
+  padding: 0.4rem;
+}
+
+.login-form .text-center a {
+  font-size: 0.75rem; /* links menores */
+}
+
+.form-control:focus {
+  border-color: #00f7ff;
+  box-shadow: 0 0 6px #00f7ff;
+}
+
+.btn-primary {
+  background-color: #00ccff;
+  border: none;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0088ff;
+}
+
+a {
+  color: #00ccff;
+}
+
+@keyframes rotateNeon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .carousel-inner img {
+    object-fit: cover;
+    height: 450px;
+  }
+
+  a.btn-primary {
+    background: #00ccff;
+    border: none;
+  }
+
+  a.btn-primary:hover {
+    background: #0088ff;
+  }
+
+  .hover-zoom {
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  .hover-zoom:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+#typewriter {
+  border-right: 2px solid #fff; 
+  padding-right: 5px;
+  display: inline-block;
+}
+
+#destaques .card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#destaques .card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+#mural h5 {
+  font-size: 1.2rem;
+}
+
+#mural p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var typewriter = new Typewriter('#typewriter', {
+      loop: true,
+      delay: 40,
+    });
+
+    typewriter
+      .typeString('Aprende Inglês ao teu ritmo, onde e quando quiseres')
+      .pauseFor(2000)
+      .deleteAll()
+      .typeString('Estuda online com professores ao vivo')
+      .pauseFor(2000)
+      .deleteAll()
+      .typeString('Cursos interativos, no teu ritmo')
+      .pauseFor(2000)
+      .deleteAll()
+      .start();
+  });
+
+  AOS.init({
+    duration: 1000, // animações mais suaves
+    once: false, // repetir animações se quiser
+  });
+</script>
+
+<script src="https://unpkg.com/typewriter-effect@2.18.0/dist/core.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+
+{% endblock %}

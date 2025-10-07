@@ -1,0 +1,71 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Materiais Recebidos{% endblock %}
+
+{% block content %}
+<section class="container my-3">
+  <div class="text-center mb-4">
+    <h3 class="fw-bold text-primary"><i class="fas fa-folder-open"></i> Materiais Recebidos</h3>
+    <p class="text-muted">Explore os materiais disponibilizados para ti.</p>
+  </div>
+
+  {% if materiais %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for m in materiais %}
+      <div class="col">
+        <div class="card h-100 shadow hover-lift position-relative">
+          <div class="ribbon bg-info text-white position-absolute">#{{ forloop.counter }}</div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><i class="fas fa-file-medical"></i> {{ m.titulo }}</h5>
+            <ul class="list-unstyled flex-grow-1">
+              <li><i class="fas fa-tag text-info"></i> <strong>Categoria:</strong> {{ m.get_categoria_display }}</li>
+              <li><i class="fas fa-calendar-alt text-secondary"></i> <strong>Enviado em:</strong> {{ m.criado_em|date:"d/m/Y H:i" }}</li>
+              <li><i class="fas fa-user text-success"></i> <strong>Por:</strong> {{ m.criado_por.get_full_name|default:m.criado_por.username }}</li>
+              <li><i class="fas fa-book text-warning"></i> <strong>Curso:</strong> {{ m.sala.curso.nome }}</li>
+              <li><i class="fas fa-door-open text-primary"></i> <strong>Sala:</strong> {{ m.sala.titulo }}</li>
+              {% if m.aula %}
+              <li><i class="fas fa-video text-danger"></i> <strong>Aula:</strong> {{ m.aula.titulo }}</li>
+              {% endif %}
+            </ul>
+            <a href="{% url 'baixar_material' m.id %}" class="btn btn-outline-primary mt-auto">
+              <i class="fas fa-download"></i> Baixar
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info mt-5 text-center shadow-sm">
+      <i class="fas fa-info-circle fa-2x mb-2"></i>
+      <p class="mb-0">Nenhum material recebido ainda.</p>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  .hover-lift {
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  .ribbon {
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 0.25rem;
+  }
+  .card-title i {
+    margin-right: 0.5rem;
+  }
+  .card ul li {
+    margin-bottom: 0.4rem;
+  }
+  .alert {
+    border-radius: 8px;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "main/base.html" %}
+{% block title %}Painel do Estudante{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="text-info">Olá, {{ request.user.get_full_name }}</h2>
+    <p>Bem-vindo à tua área de estudante. Aqui podes ver as tuas aulas e progresso.</p>
+    <a href="#" class="btn btn-success mt-3">Ver Meus Cursos</a>
+</div>
+{% endblock %}

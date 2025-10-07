@@ -1,0 +1,309 @@
+{% extends "main/base.html" %}
+{% block title %}Finanças e Preços{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 border-end" style="min-height: 80vh;">
+      <h5 class="mb-3"><i class="fas fa-tools"></i> Financeiro</h5>
+      <ul class="list-group">
+        <li class="list-group-item {% if secao == 'planos' %}active{% endif %}">
+          <a href="?secao=planos" class="text-decoration-none text-dark">Planos de Preço</a>
+        </li>
+        <li class="list-group-item {% if secao == 'dados' %}active{% endif %}">
+          <a href="?secao=dados" class="text-decoration-none text-dark">Dados Bancários</a>
+        </li>
+        <li class="list-group-item {% if secao == 'relatorio' %}active{% endif %}">
+          <a href="?secao=relatorio" class="text-decoration-none text-dark">📈 Relatório</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Área Principal -->
+    <div class="col-md-9">
+      
+      {% if secao == "planos" %}
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="text-primary">💰 Planos de Preço dos Cursos</h4>
+        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalNovoPlano">
+          <i class="fas fa-plus-circle"></i> Novo Plano
+        </button>
+      </div>
+
+      {% if planos %}
+      <div class="table-responsive shadow-sm">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Curso</th>
+              <th>Duração</th>
+              <th>Frequência</th>
+              <th>Preço</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plano in planos %}
+            <tr>
+              <td>{{ plano.curso.nome }}</td>
+              <td>{{ plano.get_duracao_display }}</td>
+              <td>{{ plano.get_frequencia_display }}</td>
+              <td>{{ plano.preco }} Kz</td>
+              <td class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEditar{{ plano.id }}">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <a href="{% url 'deletar_plano' plano.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Confirma apagar este plano?')">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+
+            <!-- Modal Editar -->
+            <div class="modal fade" id="modalEditar{{ plano.id }}" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form method="post" action="{% url 'editar_plano' plano.id %}">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                      <h5 class="modal-title">Editar Plano</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-2">
+                        <label>Curso</label>
+                        <select name="curso" class="form-select">
+                          {% for c in cursos %}
+                            <option value="{{ c.id }}" {% if c.id == plano.curso.id %}selected{% endif %}>{{ c.nome }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="mb-2">
+                        <label>Duração</label>
+                        <select name="duracao" class="form-select">
+                          <option value="30min" {% if plano.duracao == '30min' %}selected{% endif %}>30 minutos</option>
+                          <option value="1h" {% if plano.duracao == '1h' %}selected{% endif %}>1 hora</option>
+                        </select>
+                      </div>
+                      <div class="mb-2">
+                        <label>Frequência</label>
+                        <select name="frequencia" class="form-select">
+                          <option value="1x" {% if plano.frequencia == '1x' %}selected{% endif %}>1x por semana</option>
+                          <option value="2x" {% if plano.frequencia == '2x' %}selected{% endif %}>2x por semana</option>
+                          <option value="3x" {% if plano.frequencia == '3x' %}selected{% endif %}>3x por semana</option>
+                        </select>
+                      </div>
+                      <div class="mb-2">
+                        <label>Preço (Kz)</label>
+                        <input type="text" name="preco" value="{{ plano.preco }}" class="form-control" required>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-muted">Nenhum plano ainda. Adicione um novo.</p>
+      {% endif %}
+
+      <!-- Modal Criar Plano -->
+      <div class="modal fade" id="modalNovoPlano" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form method="post" action="{% url 'criar_plano' %}">
+              {% csrf_token %}
+              <div class="modal-header">
+                <h5 class="modal-title">Novo Plano</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-2">
+                  <label>Curso</label>
+                  <select name="curso" class="form-select" required>
+                    {% for c in cursos %}
+                      <option value="{{ c.id }}">{{ c.nome }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label>Duração</label>
+                  <select name="duracao" class="form-select">
+                    <option value="30min">30 minutos</option>
+                    <option value="1h">1 hora</option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label>Frequência</label>
+                  <select name="frequencia" class="form-select">
+                    <option value="1x">1x por semana</option>
+                    <option value="2x">2x por semana</option>
+                    <option value="3x">3x por semana</option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label>Preço (Kz)</label>
+                  <input type="text" name="preco" class="form-control" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-success">Criar Plano</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+        {% if secao == "dados" %}
+        <h4 class="mb-4 text-primary"><i class="fas fa-university"></i> Dados Bancários</h4>
+
+        {% if dados_bancarios %}
+        <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Banco:</strong> {{ dados_bancarios.nome_banco }}</li>
+            <li class="list-group-item"><strong>Titular:</strong> {{ dados_bancarios.titular_conta }}</li>
+            <li class="list-group-item"><strong>Conta:</strong> {{ dados_bancarios.numero_conta }}</li>
+            <li class="list-group-item"><strong>IBAN:</strong> {{ dados_bancarios.iban }}</li>
+            {% if dados_bancarios.swift %}
+            <li class="list-group-item"><strong>SWIFT:</strong> {{ dados_bancarios.swift }}</li>
+            {% endif %}
+            {% if dados_bancarios.instrucao_extra %}
+            <li class="list-group-item"><strong>Instruções:</strong> {{ dados_bancarios.instrucao_extra }}</li>
+            {% endif %}
+            </ul>
+
+            <div class="text-end mt-3">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEditarDados">
+                <i class="fas fa-edit"></i> Editar Dados
+            </button>
+            </div>
+        </div>
+        </div>
+
+        <!-- Modal Editar -->
+        <div class="modal fade" id="modalEditarDados" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="acao" value="editar">
+                <div class="modal-header">
+                <h5 class="modal-title">Editar Dados Bancários</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                {% include "financeiro/includes/form_dados_bancarios.html" with dados=dados_bancarios %}
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-success">Salvar Alterações</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+
+        {% else %}
+        <div class="alert alert-warning d-flex justify-content-between align-items-center">
+        <div>
+            <i class="fas fa-exclamation-circle me-2"></i>
+            Nenhum dado bancário registrado ainda.
+        </div>
+        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalCriarDados">
+            <i class="fas fa-plus"></i> Criar
+        </button>
+        </div>
+
+        <!-- Modal Criar -->
+        <div class="modal fade" id="modalCriarDados" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="acao" value="criar">
+                <div class="modal-header">
+                <h5 class="modal-title">Cadastrar Dados Bancários</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                {% include "financeiro/includes/form_dados_bancarios.html" %}
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-success">Salvar Dados</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+      {% if secao == "relatorio" %}
+      <h4 class="text-primary mb-3"><i class="fas fa-chart-line"></i> Relatório Financeiro</h4>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+  <form method="get" class="d-flex align-items-center gap-2">
+    <input type="hidden" name="secao" value="relatorio">
+    <label class="form-label mb-0">📆 Filtrar por:</label>
+    <select name="periodo" class="form-select" onchange="this.form.submit()">
+      <option value="todos" {% if filtro_selecionado == "todos" %}selected{% endif %}>Todos</option>
+      <option value="mensal" {% if filtro_selecionado == "mensal" %}selected{% endif %}>Este Mês</option>
+      <option value="anual" {% if filtro_selecionado == "anual" %}selected{% endif %}>Este Ano</option>
+    </select>
+  </form>
+  <span class="badge bg-success">💸 Total: {{ total_geral }} Kz</span>
+</div>
+      {% if relatorio %}
+      <div class="table-responsive shadow-sm">
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Curso</th>
+              <th>Total Pago</th>
+              <th>Total Alunos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in relatorio %}
+            <tr>
+              <td>{{ r.curso__nome }}</td>
+              <td>{{ r.total_pago }} Kz</td>
+              <td>{{ r.total_alunos }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="table-success fw-bold">
+              <td>Total Geral</td>
+              <td colspan="2">{{ total_geral }} Kz</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <div class="alert alert-info">Nenhum pagamento ainda aprovado.</div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- JS para corrigir vírgula no preço -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll("form");
+    forms.forEach(form => {
+      form.addEventListener("submit", function () {
+        const precoInput = form.querySelector("input[name='preco']");
+        if (precoInput) {
+          precoInput.value = precoInput.value.replace(",", ".");
+        }
+      });
+    });
+  });
+</script>
+{% endblock %} 

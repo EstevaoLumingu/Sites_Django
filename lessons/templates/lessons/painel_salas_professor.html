@@ -1,0 +1,55 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Minhas Salas{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">👨‍🏫 Minhas Salas de Aula</h2>
+    <div>
+    
+      {% if sala.id %}
+    <a href="{% url 'aulas_por_sala' sala.id %}" class="btn btn-outline-dark w-100">
+        <i class="fas fa-chalkboard-teacher"></i> Ver Aulas
+    </a>
+{% endif %}
+
+    </div>
+  </div>
+
+    <div class="row">
+        {% for sala in salas %}
+        <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">
+                        {{ sala.titulo }}
+                        <span class="badge bg-info ms-2">{{ sala.curso.nome }}</span>
+                        <span class="badge bg-secondary">{{ sala.get_nivel_display }}</span>
+                    </h5>
+                    <p><strong>Início:</strong> {{ sala.data_inicio }}<br>
+                    <strong>Fim:</strong> {{ sala.data_fim }}</p>
+
+                    <div class="mt-auto">
+                       <a href="{% url 'painel_sala' sala.id %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-sign-in-alt"></i> Entrar na Sala
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted text-center">Nenhuma sala criada ainda.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- AOS animation JS -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+{% endblock %}

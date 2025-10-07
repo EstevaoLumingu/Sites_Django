@@ -1,0 +1,130 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Testes de Nivelamento{% endblock %}
+
+{% block content %}
+<section class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary"><i class="fas fa-vial"></i> Testes de Nivelamento</h2>
+    <p class="text-muted mb-2">Visualize, edite e gerencie suas perguntas com facilidade.</p>
+    <a href="{% url 'criar_pergunta_nivelamento' %}" class="btn btn-success shadow-sm">
+      <i class="fas fa-plus"></i> Nova Pergunta
+    </a>
+  </div>
+
+  
+<!-- Filtros -->
+<form method="get" class="row g-3 mb-3 align-items-end">
+  <div class="col-md-5">
+    <label class="form-label fw-semibold">Filtrar por Curso</label>
+    <select name="curso" class="form-select">
+      <option value="">Todos os cursos</option>
+      {% for c in cursos %}
+        <option value="{{ c.id }}" {% if filtro_curso == c.id|stringformat:"s" %}selected{% endif %}>
+          {{ c.nome }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label fw-semibold">Filtrar por Nível</label>
+    <select name="nivel" class="form-select">
+      <option value="">Todos os níveis</option>
+      <option value="iniciante" {% if filtro_nivel == "iniciante" %}selected{% endif %}>Iniciante</option>
+      <option value="intermedio" {% if filtro_nivel == "intermedio" %}selected{% endif %}>Intermédio</option>
+      <option value="avancado" {% if filtro_nivel == "avancado" %}selected{% endif %}>Avançado</option>
+    </select>
+  </div>
+  <div class="col-md-3 d-grid">
+    <button type="submit" class="btn btn-outline-primary">
+      <i class="fas fa-filter"></i> Aplicar Filtros
+    </button>
+  </div>
+</form>
+
+  <div class="table-responsive shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Curso</th>
+          <th>Nível</th>
+          <th style="min-width: 300px;">Pergunta</th>
+          <th>Respostas</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in perguntas %}
+        <tr class="hover-highlight">
+          <td>
+            <i class="fas fa-book-open text-info me-1"></i>{{ p.curso.nome }}
+          </td>
+          <td>
+            <span class="badge bg-warning text-dark">{{ p.get_nivel_display }}</span>
+          </td>
+          <td>{{ p.pergunta|truncatechars:80 }}</td>
+          <td>
+            <ul class="mb-0 ps-3">
+              {% for r in p.respostas.all %}
+              <li>
+                {% if r.correta %}
+                  <strong class="text-success">{{ r.texto }} ✅</strong>
+                {% else %}
+                  {{ r.texto }}
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="text-center">
+            <a href="{% url 'editar_pergunta_admin' p.id %}" class="btn btn-sm btn-outline-primary me-1">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'excluir_pergunta_admin' p.id %}" class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Confirma exclusão desta pergunta?');">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center py-4">
+            <i class="fas fa-info-circle me-1"></i>
+            Nenhuma pergunta cadastrada.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+.hover-highlight:hover {
+  background-color: #f1f9ff;
+  transition: background-color .2s ease-in-out;
+}
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.table th, .table td {
+  vertical-align: middle;
+}
+.badge {
+  font-size: .9rem;
+}
+.btn-outline-primary, .btn-outline-danger {
+  padding: .35rem .6rem;
+}
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: .9rem;
+  }
+  .table td:nth-child(2),
+  .table td:nth-child(5) {
+    display: none;
+  }
+}
+</style>
+{% endblock %}

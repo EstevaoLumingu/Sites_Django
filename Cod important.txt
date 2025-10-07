@@ -1,0 +1,20 @@
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\activate
+python manage.py runserver
+
+
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+python -m venv .venv
+
+python manage.py startapp adminpanel.
+
+
+cd C:\Users\HP\Desktop\DEV PROJECTS\WEB\FLUBRIENGLISH
+
+CREATE USER 'Eng-Macundi'@'localhost' IDENTIFIED BY 'Estevao12';
+GRANT ALL PRIVILEGES ON backup_FLUBRINGLISH.* TO 'Eng-Macundi'@'localhost';
+FLUSH PRIVILEGES;

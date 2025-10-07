@@ -1,0 +1,643 @@
+[
+  {
+    "curso": "Inglês",
+    "nivel": "iniciante",
+    "pergunta": "What is the plural of 'mouse'?",
+    "respostas": [
+      {"texto": "mouses", "correta": false},
+      {"texto": "mices", "correta": false},
+      {"texto": "mice", "correta": true},
+      {"texto": "mouse", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "iniciante",
+    "pergunta": "She ___ a doctor.",
+    "respostas": [
+      {"texto": "am", "correta": false},
+      {"texto": "is", "correta": true},
+      {"texto": "are", "correta": false},
+      {"texto": "be", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "iniciante",
+    "pergunta": "How do you say 'olá' in English?",
+    "respostas": [
+      {"texto": "Goodbye", "correta": false},
+      {"texto": "Hi", "correta": true},
+      {"texto": "Yes", "correta": false},
+      {"texto": "No", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "iniciante",
+    "pergunta": "Qual o plural de 'pão'?",
+    "respostas": [
+      {"texto": "pãos", "correta": false},
+      {"texto": "pães", "correta": true},
+      {"texto": "pãoses", "correta": false},
+      {"texto": "pãones", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "iniciante",
+    "pergunta": "Complete: Ele ___ à escola ontem.",
+    "respostas": [
+      {"texto": "foi", "correta": true},
+      {"texto": "vai", "correta": false},
+      {"texto": "irá", "correta": false},
+      {"texto": "vaiu", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "iniciante",
+    "pergunta": "O feminino de 'ator' é ___",
+    "respostas": [
+      {"texto": "atora", "correta": false},
+      {"texto": "atriz", "correta": true},
+      {"texto": "atorz", "correta": false},
+      {"texto": "atores", "correta": false}
+    ]
+  },
+{
+  "curso": "Inglês",
+  "nivel": "intermedio",
+  "pergunta": "Which of the following is a correct question tag: 'You are coming, ___?'",
+  "respostas": [
+    {"texto": "isn’t it", "correta": false},
+    {"texto": "aren’t you", "correta": true},
+    {"texto": "are you", "correta": false},
+    {"texto": "don’t you", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "intermedio",
+  "pergunta": "Qual frase está corretamente acentuada?",
+  "respostas": [
+    {"texto": "Eles têm muitas idéias.", "correta": false},
+    {"texto": "Ele tem muitas idéias.", "correta": false},
+    {"texto": "Eles têm muitas ideias.", "correta": true},
+    {"texto": "Eles tem muitas ideias.", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "intermedio",
+  "pergunta": "Choose the correct sentence:",
+  "respostas": [
+    {"texto": "He don’t like pizza.", "correta": false},
+    {"texto": "He doesn’t likes pizza.", "correta": false},
+    {"texto": "He doesn’t like pizza.", "correta": true},
+    {"texto": "He no like pizza.", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "intermedio",
+  "pergunta": "Qual das palavras abaixo é um advérbio?",
+  "respostas": [
+    {"texto": "rápido", "correta": false},
+    {"texto": "rapidamente", "correta": true},
+    {"texto": "rapidez", "correta": false},
+    {"texto": "rápida", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "intermedio",
+  "pergunta": "What does 'used to' express?",
+  "respostas": [
+    {"texto": "A present habit", "correta": false},
+    {"texto": "A past habit", "correta": true},
+    {"texto": "A future plan", "correta": false},
+    {"texto": "A permission", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "iniciante",
+  "pergunta": "What color is the sky on a clear day?",
+  "respostas": [
+    {"texto": "Blue", "correta": true},
+    {"texto": "Green", "correta": false},
+    {"texto": "Red", "correta": false},
+    {"texto": "Yellow", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "iniciante",
+  "pergunta": "Como se escreve corretamente: 'a gente vai' ou 'agente vai'?",
+  "respostas": [
+    {"texto": "agente vai", "correta": false},
+    {"texto": "a gente vai", "correta": true},
+    {"texto": "a gente vaih", "correta": false},
+    {"texto": "agentevai", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "intermedio",
+  "pergunta": "Which sentence is correct?",
+  "respostas": [
+    {"texto": "She can sings very well.", "correta": false},
+    {"texto": "She can sing very well.", "correta": true},
+    {"texto": "She can to sing very well.", "correta": false},
+    {"texto": "She sings can very well.", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "avancado",
+  "pergunta": "Qual a classificação da palavra 'rapidamente'?",
+  "respostas": [
+    {"texto": "adjetivo", "correta": false},
+    {"texto": "verbo", "correta": false},
+    {"texto": "advérbio", "correta": true},
+    {"texto": "substantivo", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "avancado",
+  "pergunta": "Choose the correct passive voice: 'They built a house.'",
+  "respostas": [
+    {"texto": "A house was built.", "correta": true},
+    {"texto": "They was built a house.", "correta": false},
+    {"texto": "The house builded.", "correta": false},
+    {"texto": "Was built a house by them.", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "fluente",
+  "pergunta": "Em qual oração o uso da vírgula está incorreto?",
+  "respostas": [
+    {"texto": "João, meu irmão, chegou ontem.", "correta": false},
+    {"texto": "Se chover, não sairemos.", "correta": false},
+    {"texto": "Comprei pão, leite, e queijo.", "correta": true},
+    {"texto": "Maria, embora cansada, saiu.", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "fluente",
+  "pergunta": "What is the meaning of 'Nevertheless'?",
+  "respostas": [
+    {"texto": "Consequently", "correta": false},
+    {"texto": "Despite that", "correta": true},
+    {"texto": "Moreover", "correta": false},
+    {"texto": "Instead", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "iniciante",
+  "pergunta": "Qual destas palavras é um verbo?",
+  "respostas": [
+    {"texto": "correr", "correta": true},
+    {"texto": "feliz", "correta": false},
+    {"texto": "verde", "correta": false},
+    {"texto": "menina", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "iniciante",
+  "pergunta": "How do you say 'bom dia' in English?",
+  "respostas": [
+    {"texto": "Good morning", "correta": true},
+    {"texto": "Good night", "correta": false},
+    {"texto": "Goodbye", "correta": false},
+    {"texto": "Hello", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "intermedio",
+  "pergunta": "Qual frase tem sentido figurado?",
+  "respostas": [
+    {"texto": "Ela é uma pedra.", "correta": true},
+    {"texto": "A pedra está no chão.", "correta": false},
+    {"texto": "Comprei uma pedra.", "correta": false},
+    {"texto": "Peguei a pedra.", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "iniciante",
+  "pergunta": "What color is the sky on a clear day?",
+  "respostas": [
+    {"texto": "Blue", "correta": true},
+    {"texto": "Green", "correta": false},
+    {"texto": "Red", "correta": false},
+    {"texto": "Yellow", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "iniciante",
+  "pergunta": "Como se escreve corretamente: 'a gente vai' ou 'agente vai'?",
+  "respostas": [
+    {"texto": "agente vai", "correta": false},
+    {"texto": "a gente vai", "correta": true},
+    {"texto": "a gente vaih", "correta": false},
+    {"texto": "agentevai", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "intermedio",
+  "pergunta": "Which sentence is correct?",
+  "respostas": [
+    {"texto": "She can sings very well.", "correta": false},
+    {"texto": "She can sing very well.", "correta": true},
+    {"texto": "She can to sing very well.", "correta": false},
+    {"texto": "She sings can very well.", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "avancado",
+  "pergunta": "Qual a classificação da palavra 'rapidamente'?",
+  "respostas": [
+    {"texto": "adjetivo", "correta": false},
+    {"texto": "verbo", "correta": false},
+    {"texto": "advérbio", "correta": true},
+    {"texto": "substantivo", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "avancado",
+  "pergunta": "Choose the correct passive voice: 'They built a house.'",
+  "respostas": [
+    {"texto": "A house was built.", "correta": true},
+    {"texto": "They was built a house.", "correta": false},
+    {"texto": "The house builded.", "correta": false},
+    {"texto": "Was built a house by them.", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "fluente",
+  "pergunta": "Em qual oração o uso da vírgula está incorreto?",
+  "respostas": [
+    {"texto": "João, meu irmão, chegou ontem.", "correta": false},
+    {"texto": "Se chover, não sairemos.", "correta": false},
+    {"texto": "Comprei pão, leite, e queijo.", "correta": true},
+    {"texto": "Maria, embora cansada, saiu.", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "fluente",
+  "pergunta": "What is the meaning of 'Nevertheless'?",
+  "respostas": [
+    {"texto": "Consequently", "correta": false},
+    {"texto": "Despite that", "correta": true},
+    {"texto": "Moreover", "correta": false},
+    {"texto": "Instead", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "iniciante",
+  "pergunta": "Qual destas palavras é um verbo?",
+  "respostas": [
+    {"texto": "correr", "correta": true},
+    {"texto": "feliz", "correta": false},
+    {"texto": "verde", "correta": false},
+    {"texto": "menina", "correta": false}
+  ]
+},
+{
+  "curso": "Inglês",
+  "nivel": "iniciante",
+  "pergunta": "How do you say 'bom dia' in English?",
+  "respostas": [
+    {"texto": "Good morning", "correta": true},
+    {"texto": "Good night", "correta": false},
+    {"texto": "Goodbye", "correta": false},
+    {"texto": "Hello", "correta": false}
+  ]
+},
+{
+  "curso": "Português",
+  "nivel": "intermedio",
+  "pergunta": "Qual frase tem sentido figurado?",
+  "respostas": [
+    {"texto": "Ela é uma pedra.", "correta": true},
+    {"texto": "A pedra está no chão.", "correta": false},
+    {"texto": "Comprei uma pedra.", "correta": false},
+    {"texto": "Peguei a pedra.", "correta": false}
+  ]
+},
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "What is the opposite of 'hot'?",
+    "respostas": [
+      {"texto": "Cold", "correta": true},
+      {"texto": "Warm", "correta": false},
+      {"texto": "Sunny", "correta": false},
+      {"texto": "Cool", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Which word is a verb?",
+    "respostas": [
+      {"texto": "Run", "correta": true},
+      {"texto": "Table", "correta": false},
+      {"texto": "Blue", "correta": false},
+      {"texto": "Car", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Choose the correct past tense of 'go'.",
+    "respostas": [
+      {"texto": "Went", "correta": true},
+      {"texto": "Goed", "correta": false},
+      {"texto": "Gone", "correta": false},
+      {"texto": "Going", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "How do you ask someone's age?",
+    "respostas": [
+      {"texto": "How old are you?", "correta": true},
+      {"texto": "What is your name?", "correta": false},
+      {"texto": "Where do you live?", "correta": false},
+      {"texto": "Do you like music?", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Which word is a noun?",
+    "respostas": [
+      {"texto": "Apple", "correta": true},
+      {"texto": "Eat", "correta": false},
+      {"texto": "Running", "correta": false},
+      {"texto": "Quick", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Select the correct translation for 'casa'.",
+    "respostas": [
+      {"texto": "House", "correta": true},
+      {"texto": "Dog", "correta": false},
+      {"texto": "Car", "correta": false},
+      {"texto": "Tree", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Choose the plural form of 'child'.",
+    "respostas": [
+      {"texto": "Children", "correta": true},
+      {"texto": "Childs", "correta": false},
+      {"texto": "Childes", "correta": false},
+      {"texto": "Childer", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Which sentence is correct?",
+    "respostas": [
+      {"texto": "She likes pizza.", "correta": true},
+      {"texto": "She like pizza.", "correta": false},
+      {"texto": "She liking pizza.", "correta": false},
+      {"texto": "She pizza likes.", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "How do you say 'Obrigado' in English?",
+    "respostas": [
+      {"texto": "Thank you", "correta": true},
+      {"texto": "Hello", "correta": false},
+      {"texto": "Sorry", "correta": false},
+      {"texto": "Please", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Which word is an adjective?",
+    "respostas": [
+      {"texto": "Beautiful", "correta": true},
+      {"texto": "Run", "correta": false},
+      {"texto": "Quickly", "correta": false},
+      {"texto": "Dog", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Complete: I ___ to school every day.",
+    "respostas": [
+      {"texto": "go", "correta": true},
+      {"texto": "went", "correta": false},
+      {"texto": "going", "correta": false},
+      {"texto": "gone", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Which word is a question word?",
+    "respostas": [
+      {"texto": "Where", "correta": true},
+      {"texto": "Chair", "correta": false},
+      {"texto": "Happy", "correta": false},
+      {"texto": "Jump", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Select the correct answer: I ___ like coffee.",
+    "respostas": [
+      {"texto": "do", "correta": true},
+      {"texto": "does", "correta": false},
+      {"texto": "did", "correta": false},
+      {"texto": "doing", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Which is a day of the week?",
+    "respostas": [
+      {"texto": "Monday", "correta": true},
+      {"texto": "Sun", "correta": false},
+      {"texto": "Summer", "correta": false},
+      {"texto": "Night", "correta": false}
+    ]
+  },
+  {
+    "curso": "Inglês",
+    "nivel": "pre_intermedio",
+    "pergunta": "Translate: 'Ele está cansado.'",
+    "respostas": [
+      {"texto": "He is tired.", "correta": true},
+      {"texto": "He is happy.", "correta": false},
+      {"texto": "He is tall.", "correta": false},
+      {"texto": "He is young.", "correta": false}
+    ]
+  },
+
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual é o antônimo de 'rápido'?",
+    "respostas": [
+      {"texto": "Devagar", "correta": true},
+      {"texto": "Veloz", "correta": false},
+      {"texto": "Alto", "correta": false},
+      {"texto": "Forte", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual é o plural de 'cão'?",
+    "respostas": [
+      {"texto": "Cães", "correta": true},
+      {"texto": "Cãos", "correta": false},
+      {"texto": "Cãoses", "correta": false},
+      {"texto": "Caoes", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual frase está correta?",
+    "respostas": [
+      {"texto": "Eu gosto de estudar.", "correta": true},
+      {"texto": "Eu gosta estudar.", "correta": false},
+      {"texto": "Eu estudando gosto.", "correta": false},
+      {"texto": "Eu de estudar gosto.", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual palavra é um verbo?",
+    "respostas": [
+      {"texto": "Correr", "correta": true},
+      {"texto": "Mesa", "correta": false},
+      {"texto": "Azul", "correta": false},
+      {"texto": "Casa", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual palavra é um substantivo?",
+    "respostas": [
+      {"texto": "Livro", "correta": true},
+      {"texto": "Correr", "correta": false},
+      {"texto": "Bonito", "correta": false},
+      {"texto": "Rapidamente", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual é o diminutivo de 'casa'?",
+    "respostas": [
+      {"texto": "Casinha", "correta": true},
+      {"texto": "Casota", "correta": false},
+      {"texto": "Casotaço", "correta": false},
+      {"texto": "Caseta", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual frase está no passado?",
+    "respostas": [
+      {"texto": "Ontem eu estudei.", "correta": true},
+      {"texto": "Hoje eu estudo.", "correta": false},
+      {"texto": "Amanhã eu estudarei.", "correta": false},
+      {"texto": "Eu estudo sempre.", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual palavra é um adjetivo?",
+    "respostas": [
+      {"texto": "Bonito", "correta": true},
+      {"texto": "Comer", "correta": false},
+      {"texto": "Mesa", "correta": false},
+      {"texto": "Rapidamente", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Escolha a frase correta:",
+    "respostas": [
+      {"texto": "Ele está cansado.", "correta": true},
+      {"texto": "Ele cansado está.", "correta": false},
+      {"texto": "Cansado ele está.", "correta": false},
+      {"texto": "Está ele cansado.", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual palavra significa 'felicidade'?",
+    "respostas": [
+      {"texto": "Alegria", "correta": true},
+      {"texto": "Tristeza", "correta": false},
+      {"texto": "Raiva", "correta": false},
+      {"texto": "Medo", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Qual é o correto plural de 'flor'?",
+    "respostas": [
+      {"texto": "Flores", "correta": true},
+      {"texto": "Flors", "correta": false},
+      {"texto": "Floras", "correta": false},
+      {"texto": "Floris", "correta": false}
+    ]
+  },
+  {
+    "curso": "Português",
+    "nivel": "pre_intermedio",
+    "pergunta": "Escolha a forma correta de cumprimentar:",
+    "respostas": [
+      {"texto": "Bom dia", "correta": true},
+      {"texto": "Boa noite", "correta": false},
+      {"texto": "Tchau", "correta": false},
+      {"texto": "Oi", "correta": false}
+    ]
+  }
+
+
+  ]

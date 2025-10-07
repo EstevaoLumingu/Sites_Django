@@ -1,0 +1,117 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Teste de Nivelamento – {{ curso.nome }}{% endblock %}
+
+{% block content %}
+<section class="container my-4">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold"><i class="fas fa-vial text-primary"></i> Teste de avaliação para o curso de {{ curso.nome }}</h2>
+    <p class="text-muted">Responda às perguntas abaixo para avaliarmos seu nível.</p>
+  </div>
+
+  <form method="post" id="quizForm">
+    {% csrf_token %}
+
+    <div id="questoes-wrapper">
+      {% for pergunta in perguntas %}
+      <div class="questao-card mb-4 p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'0' }}00">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="badge bg-primary">Pergunta {{ forloop.counter }} de {{ perguntas|length }}</span>
+          <span class="percent{{ forloop.counter|add:'0' }} text-muted"></span>
+        </div>
+        <p class="mb-3"><strong>{{ pergunta.pergunta }}</strong></p>
+
+        <div>
+          {% for resp in pergunta.respostas.all %}
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="pergunta_{{ pergunta.id }}" id="resp_{{ resp.id }}" value="{{ resp.id }}">
+            <label class="form-check-label ps-2" for="resp_{{ resp.id }}">{{ resp.texto }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+      <button type="button" class="btn btn-outline-primary btn-lg me-2" id="prevBtn" disabled>
+        <i class="fas fa-chevron-left"></i> Anterior
+      </button>
+      <button type="button" class="btn btn-outline-primary btn-lg" id="nextBtn">
+        Próxima <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="progress mt-4" style="height: 8px;">
+      <div class="progress-bar bg-success" id="progBar" role="progressbar" style="width:0%"> </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <button type="submit" class="btn btn-success btn-lg" id="submitBtn" style="display:none;">
+        <i class="fas fa-check-circle"></i> Submeter Teste
+      </button>
+    </div>
+
+  </form>
+</section>
+
+<style>
+  .questao-card { display: none; background: #fff; }
+  .questao-card.active { display: block; }
+  .form-check-input:checked + .form-check-label {
+    background: rgba(0, 204, 255, 0.1);
+    border-radius: 4px;
+  }
+</style>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  const questoes = document.querySelectorAll('.questao-card');
+  const total = questoes.length;
+  let current = 0;
+
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const progBar = document.getElementById('progBar');
+
+  function showQuestao(index) {
+    questoes.forEach(q => q.classList.remove('active'));
+    questoes[index].classList.add('active');
+
+    prevBtn.disabled = index === 0;
+    if (index === total - 1) {
+      nextBtn.style.display = 'none';
+      submitBtn.style.display = 'inline-block';
+    } else {
+      nextBtn.style.display = 'inline-block';
+      submitBtn.style.display = 'none';
+    }
+
+    const perc = Math.round(((index + 1) / total) * 100);
+    progBar.style.width = perc + '%';
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (current > 0) current--;
+    showQuestao(current);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (current < total - 1) current++;
+    showQuestao(current);
+  });
+
+  document.getElementById('quizForm').addEventListener('submit', function(e) {
+    const marked = document.querySelectorAll('input[type=radio]:checked');
+    if (marked.length < total) {
+      e.preventDefault();
+      alert('Por favor, responda a todas as perguntas antes de submeter.');
+    }
+  });
+
+  showQuestao(0);
+</script>
+{% endblock %}

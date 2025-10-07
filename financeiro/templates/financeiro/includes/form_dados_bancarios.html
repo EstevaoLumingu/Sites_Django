@@ -1,0 +1,24 @@
+<div class="mb-2">
+  <label>Banco</label>
+  <input type="text" name="nome_banco" value="{{ dados.nome_banco|default_if_none:'' }}" class="form-control" required>
+</div>
+<div class="mb-2">
+  <label>Titular da Conta</label>
+  <input type="text" name="titular_conta" value="{{ dados.titular_conta|default_if_none:'' }}" class="form-control" required>
+</div>
+<div class="mb-2">
+  <label>Número da Conta</label>
+  <input type="text" name="numero_conta" value="{{ dados.numero_conta|default_if_none:'' }}" class="form-control" required>
+</div>
+<div class="mb-2">
+  <label>IBAN</label>
+  <input type="text" name="iban" value="{{ dados.iban|default_if_none:'' }}" class="form-control" required>
+</div>
+<div class="mb-2">
+  <label>SWIFT (Opcional)</label>
+  <input type="text" name="swift" value="{{ dados.swift|default_if_none:'' }}" class="form-control">
+</div>
+<div class="mb-2">
+  <label>Instruções Extras</label>
+  <textarea name="instrucao_extra" class="form-control" rows="3">{{ dados.instrucao_extra|default_if_none:'' }}</textarea>
+</div>

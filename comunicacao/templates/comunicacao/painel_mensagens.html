@@ -1,0 +1,61 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Mensagens{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <!-- 🗂️ Sidebar de conversas -->
+    <div class="col-md-2 col-lg-3 border-end" style="height: 30vh; overflow-y: auto;">
+      <h5 class="text-primary mb-1"><i class="fas fa-comments"></i> Conversas</h5>
+      <form method="get" action="{% url 'mensagens_lista' %}">
+        <div class="input-group mb-3 shadow-sm rounded">
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
+          <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Buscar conversa">
+        </div>
+      </form>
+      {% for u in conversas %}
+        <a href="{% url 'mensagens_com_usuario' u.id %}" class="text-decoration-none">
+          <div class="d-flex align-items-center p-2 mb-2 rounded 
+                      {% if ativo and u.id == ativo.id %}bg-light shadow-sm{% endif %}"
+               style="transition: background .2s;">
+            {% if u.foto_perfil %}
+              <img src="{{ u.foto_perfil.url }}" class="rounded-circle me-2 border" width="40" height="40">
+            {% else %}
+              <img src="{% static 'img/user.png' %}" class="rounded-circle me-2 border" width="40" height="40">
+            {% endif %}
+            <div>
+              <strong>{{ u.get_full_name|default:u.username }}</strong><br>
+              <small class="text-muted">Última mensagem: {{ u.ultima_mensagem|truncatewords:5 }}</small>
+            </div>
+          </div>
+        </a>
+      {% empty %}
+        <p class="text-muted">Nenhuma conversa iniciada.</p>
+      {% endfor %}
+    </div>
+
+    <!-- 💬 Área de chat -->
+    <div class="col-md-8 col-lg-9">
+      {% if ativo %}
+        {% include "comunicacao/chat.html" with colega=ativo mensagens=mensagens %}
+      {% else %}
+        <div class="text-center text-muted pt-5">
+          <i class="fas fa-comment-dots fa-4x mb-3"></i>
+          <h4>Selecione uma conversa à esquerda para começar</h4>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .rounded-circle { object-fit: cover; }
+  .input-group .form-control { border-left: none; }
+  .input-group-text { background: #fff; border-right: none; }
+
+
+
+
+</style>
+{% endblock %}

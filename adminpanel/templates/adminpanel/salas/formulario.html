@@ -1,0 +1,88 @@
+{% extends "main/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow p-4 neon-box animate__animated animate__fadeIn">
+        <h3 class="mb-4 text-center text-primary">
+          <i class="fas fa-door-open me-2"></i> {{ titulo }}
+        </h3>
+
+        <form method="post" class="row g-3 align-items-center" novalidate>
+          {% csrf_token %}
+
+          {% for field in form %}
+            <div class="col-md-4 d-flex align-items-center gap-2">
+              <label class="form-label mb-0 min-w-120 fw-semibold">{{ field.label }}</label>
+              {{ field|add_class:"form-control form-control-sm flex-grow-1" }}
+            </div>
+            {% for error in field.errors %}
+              <div class="col-12 text-danger small">{{ error }}</div>
+            {% endfor %}
+          {% endfor %}
+
+          <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+            <button type="submit" class="btn btn-success shadow-sm">
+              <i class="fas fa-save me-1"></i> Guardar
+            </button>
+            <a href="{% url 'listar_salas_admin' %}" class="btn btn-secondary shadow-sm">
+              <i class="fas fa-times-circle me-1"></i> Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Animate CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+  .min-w-120 { min-width: 120px; }
+
+  .neon-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  .neon-box::before, .neon-box::after {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    background: conic-gradient(from 0deg, #00f7ff, #ff00ff, #00f7ff, #ff00ff);
+    animation: rotateNeon 4s linear infinite;
+    filter: blur(12px);
+    opacity: 0.6;
+    z-index: -1;
+    border-radius: 20px;
+  }
+  .neon-box::after {
+    animation-direction: reverse;
+  }
+
+  @keyframes rotateNeon {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .btn-success {
+    background: #28a745;
+    border: none;
+  }
+  .btn-success:hover {
+    background: #218838;
+  }
+  .btn-secondary {
+    background: #6c757d;
+    border: none;
+  }
+  .btn-secondary:hover {
+    background: #5a6268;
+  }
+</style>
+{% endblock %}

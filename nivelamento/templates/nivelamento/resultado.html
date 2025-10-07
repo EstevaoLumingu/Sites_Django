@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% block title %}Resultado do Teste{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+    <div class="card-body text-center">
+      <h3 class="card-title">Resultado do Teste</h3>
+      <p class="lead">Pontuação: <strong>{{ resultado.pontuacao }}</strong></p>
+      <p class="lead">Nível Avaliado: <strong class="text-primary text-uppercase">{{ resultado.nivel_atribuido }}</strong></p>
+      <p class="lead">Nível Alcançado <strong>{{ nivel_requerido|capfirst }}</strong></p>
+
+      {% if apto %}
+        <div class="alert alert-success mt-3">
+          🎉 Parabéns! Estás apto(a) a ingressar neste curso.
+        </div>
+
+        <!-- ✅ Botão para pagamento (Apto) -->
+        <form method="post" action="{% url 'pagina_pagamento' curso.id resultado.id %}" class="mt-4">
+          {% csrf_token %}
+          <button class="btn btn-success w-100">Continuar para Pagamento</button>
+        </form>
+
+      {% else %}
+        <div class="alert alert-warning mt-3">
+          ⚠️ O teu nível não corresponde ao exigido para este curso.
+        </div>
+
+        <!-- ✅ Botão Fazer Mesmo Assim -->
+        <form method="post" action="{% url 'pagina_pagamento' curso.id resultado.id %}" class="mt-3">
+          {% csrf_token %}
+          <button class="btn btn-outline-success w-100">Fazer Mesmo Assim</button>
+        </form>
+
+        <!-- ✅ Botão Repetir o Teste -->
+        <form method="post" class="mt-2">
+          {% csrf_token %}
+          <input type="hidden" name="acao" value="repetir">
+          <button type="submit" class="btn btn-outline-secondary w-100">Repetir o Teste</button>
+        </form>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

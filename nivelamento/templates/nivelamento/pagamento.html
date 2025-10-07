@@ -1,0 +1,58 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Pagamento do Curso{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-sm mx-auto p-4" style="max-width: 700px;">
+    <h4 class="mb-3 text-primary"><i class="fas fa-credit-card"></i> Pagamento do Curso</h4>
+
+    <p><strong>Curso:</strong> {{ curso.nome }}</p>
+    <p><strong>Resultado do Teste:</strong> {{ resultado.nivel_atribuido|capfirst }}</p>
+
+    <hr>
+    <h5 class="mb-2">💰 Selecione um plano de pagamento:</h5>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <select name="plano" class="form-select" required>
+          <option value="">-- Escolha um plano --</option>
+          {% for plano in planos %}
+            <option value="{{ plano.id }}">
+              {{ plano.get_frequencia_display }} • {{ plano.get_duracao_display }} → {{ plano.preco|floatformat:0 }} Kz
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="comprovativo" class="form-label">📎 Anexe o comprovativo de pagamento</label>
+        <input type="file" name="comprovativo" accept="application/pdf,image/*" class="form-control" required>
+      </div>
+
+      <button class="btn btn-success w-100">
+        <i class="fas fa-paper-plane"></i> Submeter Comprovativo
+      </button>
+    </form>
+
+    {% if configuracao %}
+    <hr class="mt-4">
+    <h5 class="text-muted">💳 Dados Bancários:</h5>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Banco:</strong> {{ configuracao.nome_banco }}</li>
+      <li class="list-group-item"><strong>Conta:</strong> {{ configuracao.numero_conta }}</li>
+      <li class="list-group-item"><strong>IBAN:</strong> {{ configuracao.iban }}</li>
+      <li class="list-group-item"><strong>Titular:</strong> {{ configuracao.titular_conta }}</li>
+      {% if configuracao.swift %}
+        <li class="list-group-item"><strong>SWIFT:</strong> {{ configuracao.swift }}</li>
+      {% endif %}
+      {% if configuracao.instrucao_extra %}
+        <li class="list-group-item text-muted">{{ configuracao.instrucao_extra }}</li>
+      {% endif %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

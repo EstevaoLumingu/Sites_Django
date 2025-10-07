@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+{% block title %}Materiais Didáticos{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 bg-light p-3">
+      <h5 class="fw-bold"><i class="fas fa-folder-open"></i> Materiais</h5>
+      <ul class="list-group">
+        <a href="{% url 'materiais_recebidos' %}" class="list-group-item list-group-item-action">
+          <i class="fas fa-download"></i> Ver Materiais Recebidos
+        </a>
+        <a href="{% url 'meus_materiais' %}" class="list-group-item list-group-item-action">
+          <i class="fas fa-upload"></i> Meus Materiais
+        </a>
+      </ul>
+    </div>
+
+    <!-- Conteúdo a direita (inicial vazio ou landing) -->
+    <div class="col-md-9 p-4">
+      <h4 class="text-muted">📂 Selecione uma opção à esquerda para visualizar materiais.</h4>
+    </div>
+  </div>
+</div>
+{% endblock %}

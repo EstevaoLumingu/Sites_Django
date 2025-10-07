@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+{% block title %}Painel do Professor{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="text-success">Bem-vindo, Professor {{ request.user.get_full_name }}</h2>
+    <p>Aqui poderá gerir cursos, ver alunos inscritos e lançar aulas.</p>
+    <a href="{% url 'organizar_alunos' sala.id %}" class="btn btn-warning btn-sm">
+    Organizar Alunos Automaticamente
+</a>
+
+
+    <a href="#" class="btn btn-primary mt-3">Gerir Cursos</a>
+</div>
+{% endblock %}

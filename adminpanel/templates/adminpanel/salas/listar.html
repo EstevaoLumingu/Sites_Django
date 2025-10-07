@@ -1,0 +1,93 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Gerir Salas de Aula{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary"><i class="fas fa-chalkboard-teacher me-2"></i>Gestão de Salas de Aula</h2>
+    <a href="{% url 'criar_sala_admin' %}" class="btn btn-success shadow-sm">
+      <i class="fas fa-plus-circle me-1"></i> Nova Sala
+    </a>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Id</th>
+          <th>Nome da Sala</th>
+          <th>Curso</th>
+          <th>Nível</th>
+          <th>Professor</th>
+          <th>Data Início</th>
+          <th>Data Fim</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sala in salas %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ sala.titulo }}</td>
+          <td>{{ sala.curso.nome }}</td>
+          <td>{{ sala.get_nivel_display }}</td>
+          <td>{{ sala.professor.get_full_name|default:sala.professor.username }}</td>
+          <td>{{ sala.data_inicio|date:"d/m/Y" }}</td>
+          <td>{{ sala.data_fim|date:"d/m/Y" }}</td>
+          <td class="text-center">
+            <a href="{% url 'editar_sala_admin' sala.id %}" class="btn btn-sm btn-warning me-1">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'excluir_sala_admin' sala.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja eliminar esta sala?')">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" class="text-center py-4">Nenhuma sala criada ainda.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .btn-success {
+    background: #00cc66;
+    border: none;
+  }
+  .btn-success:hover {
+    background: #00aa55;
+  }
+  .btn-warning {
+    background: #ffc107;
+    border: none;
+  }
+  .btn-warning:hover {
+    background: #e0a800;
+  }
+  .btn-danger {
+    background: #dc3545;
+    border: none;
+  }
+  .btn-danger:hover {
+    background: #c82333;
+  }
+  .table-hover tbody tr:hover {
+    background: rgba(0, 204, 102, 0.1);
+  }
+  .table-responsive {
+    overflow-x: auto;
+  }
+  h2 i {
+    font-size: 1.4rem;
+  }
+  th, td {
+    vertical-align: middle;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,46 @@
+# Gera o ficheiro de dependências do Python
+pip freeze > requirements.txt
+
+# Dump da base de dados MySQL
+mysqldump -u Eng-Macundi -p databaseSIGAME > backup_SIGAME.sql
+# Vai pedir a senha: Estevao12
+
+# Compacta tudo (menos o ambiente virtual)
+tar --exclude='new_env' -czf SIGAME_backup.tar.gz Projecto_Final/
+
+
+
+novo pc
+
+# Extrai o projecto
+tar -xzf SIGAME_backup.tar.gz
+
+# Entra na pasta do projecto
+cd Projecto_Final/MGMQ
+
+# Cria ambiente virtual
+python -m venv new_env
+
+# Ativa o ambiente
+new_env\Scripts\activate  # Windows
+
+# Instala pip e dependências
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Cria a base de dados (caso ainda não exista)
+mysql -u Eng-Macundi -p -e "CREATE DATABASE IF NOT EXISTS databaseSIGAME;"
+
+# Restaura o dump da base de dados
+mysql -u Eng-Macundi -p databaseSIGAME < backup_SIGAME.sql
+
+# Aplica migrações Django (caso necessário)
+python manage.py migrate
+
+# Corre o servidor
+python manage.py runserver
+
+
+mysqldump -u Eng-Macundi -p databaseSIGAME > backup_SIGAME.sql
+
+mysqldump -u Eng-Macundi -p databaseFLUBRINGLISH > backup_FLUBRINGLISH.sql

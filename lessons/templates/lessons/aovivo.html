@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+{% block title %}{{ aula.titulo }}{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>{{ aula.titulo }}</h2>
+    <p><strong>Professor:</strong> {{ aula.criado_por.get_full_name }}</p>
+    <p><strong>Data/Hora:</strong> {{ aula.horario }}</p>
+    <p><strong>Sala:</strong> {{ aula.classroom.titulo }}</p>
+    <hr>
+    <iframe
+        src="{{ aula.get_jitsi_url }}"
+        width="100%"
+        height="600"
+        allow="camera; microphone; fullscreen; display-capture"
+        frameborder="0"
+        allowfullscreen>
+    </iframe>
+</div>
+{% endblock %}

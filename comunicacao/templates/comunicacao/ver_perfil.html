@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Perfil de {{ colega.get_full_name|default:colega.username }}{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <div class="card mx-auto shadow-lg p-4" style="max-width: 500px;">
+    <div class="text-center mb-3">
+      {% if colega.foto_perfil %}
+        <img src="{{ colega.foto_perfil.url }}" class="rounded-circle mb-3 border" width="120" height="120">
+      {% else %}
+        <img src="{% static 'img/user.png' %}" class="rounded-circle mb-3 border" width="120" height="120">
+      {% endif %}
+      <h3>{{ colega.get_full_name|default:colega.username }}</h3>
+      <small class="text-muted">@{{ colega.username }}</small>
+    </div>
+    <hr>
+    <div class="mb-2"><i class="fas fa-envelope"></i> <strong>Email:</strong> {{ colega.email }}</div>
+    <div class="mb-2"><i class="fas fa-user-tag"></i> <strong>Categoria:</strong> {{ colega.categoria|title }}</div>
+    {% if colega.especialidade %}
+      <div class="mb-2"><i class="fas fa-graduation-cap"></i> <strong>Especialidade:</strong> {{ colega.especialidade }}</div>
+    {% endif %}
+    <div class="pt-3 text-center">
+      <a href="{% url 'mensagens_com_usuario' colega.id %}" class="btn btn-outline-primary px-4">
+        <i class="fas fa-comment"></i> Enviar Mensagem
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card { border-radius: 12px; }
+</style>
+{% endblock %}

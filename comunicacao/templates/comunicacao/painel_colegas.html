@@ -1,0 +1,96 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Pesquisar Colegas{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+
+    <!-- Sidebar de pesquisa -->
+    <div class="col-md-4 col-lg-3 border-end" style="height: 80vh; overflow-y: auto;">
+      <div class="pb-3 mb-3 border-bottom">
+        <h5 class="text-primary"><i class="fas fa-users"></i> Colegas</h5>
+        <form method="get">
+          <div class="input-group mb-3 shadow-sm rounded">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Nome ou username">
+          </div>
+        </form>
+      </div>
+
+      {% for user in colegas %}
+      <a href="?user_id={{ user.id }}" class="text-decoration-none">
+        <div class="d-flex align-items-center p-2 mb-1 rounded
+                    {% if perfil and user.id == perfil.id %}bg-light{% endif %}"
+             style="transition: background .2s;">
+          {% if user.foto_perfil %}
+            <img src="{{ user.foto_perfil.url }}" class="rounded-circle me-2 border" width="40" height="40">
+          {% else %}
+            <img src="{% static 'img/user.png' %}" class="rounded-circle me-2 border" width="40" height="40">
+          {% endif %}
+          <div>
+            <strong>{{ user.get_full_name|default:user.username }}</strong><br>
+            <small class="text-muted">@{{ user.username }}</small>
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <p class="text-muted">Nenhum colega encontrado.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Detalhes do perfil selecionado -->
+    <div class="col-md-8 col-lg-9">
+      {% if perfil %}
+      <div class="card shadow-lg rounded p-4">
+        <div class="d-flex align-items-center mb-3">
+          {% if perfil.foto_perfil %}
+            <img src="{{ perfil.foto_perfil.url }}" class="rounded-circle me-4 border" width="80" height="80">
+          {% else %}
+            <img src="{% static 'img/user.png' %}" class="rounded-circle me-4 border" width="80" height="80">
+          {% endif %}
+          <div>
+            <h4>{{ perfil.get_full_name|default:perfil.username }}</h4>
+            <small class="text-muted">@{{ perfil.username }}</small>
+          </div>
+        </div>
+        <div class="mb-3">
+          <p><i class="fas fa-envelope"></i> <strong>Email:</strong> {{ perfil.email }}</p>
+          <p><i class="fas fa-user-tag"></i> <strong>Categoria:</strong> {{ perfil.categoria|title }}</p>
+          {% if perfil.especialidade %}
+            <p><i class="fas fa-graduation-cap"></i> <strong>Especialidade:</strong> {{ perfil.especialidade }}</p>
+          {% endif %}
+        </div>
+        <a href="{% url 'mensagens_com_usuario' perfil.id %}" class="btn btn-outline-primary">
+          <i class="fas fa-paper-plane"></i> Enviar Mensagem
+        </a>
+      </div>
+      {% else %}
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-user-friends fa-4x mb-3"></i>
+        <h4>Selecione um colega à esquerda</h4>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .card { border-radius: 12px; }
+  .input-group .form-control {
+    border-left: none;
+    border-radius: 0 .25rem .25rem 0;
+  }
+  .input-group-text {
+    background: #fff;
+    border-right: none;
+  }
+  .rounded-circle {
+    object-fit: cover;
+  }
+  a:hover .me-2, .me-2:hover ~ div strong {
+    color: #0056b3;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+{% block title %}Criar Curso{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Criar Novo Curso</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success">Criar Curso</button>
+    <a href="{% url 'painel_salas_professor' %}" class="btn btn-secondary">Voltar</a>
+  </form>
+</div>
+{% endblock %}

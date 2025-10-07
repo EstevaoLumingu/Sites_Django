@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+{% block title %}Cursos Disponíveis{% endblock %}
+{% block content %}
+<h2>Cursos Disponíveis</h2>
+<div class="row">
+    {% for curso in cursos %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{ curso.nome }}</h5>
+                    <p>{{ curso.descricao|truncatewords:20 }}</p>
+                    <p><small>Professor: {{ curso.professor.get_full_name|default:"(Por atribuir)" }}</small></p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Nenhum curso disponível.</p>
+    {% endfor %}
+</div>
+{% endblock %}

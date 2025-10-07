@@ -1,0 +1,136 @@
+{% extends "main/base.html" %}
+{% block title %}Painel de Administração{% endblock %}
+
+{% block content %}
+
+
+<div class="container my-3">
+  <div class="text-center mb-4">
+    <h1 class="fw-bold text-primary animate__animated animate__fadeInDown">
+      <i class="fas fa-cogs me-2"></i> Painel Administrativo
+    </h1>
+    <p class="text-muted">Gerencie cursos, usuários e salas de aula com facilidade.</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Bloco superior -->
+    <div class="col-md-4">
+      <a href="{% url 'listar_cursos_admin' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+        <div class="card-body text-center">
+          <i class="fas fa-book fa-3x text-primary mb-3"></i>
+          <h5 class="card-title fw-semibold">Gerir Cursos</h5>
+          <p class="text-muted">Adicione ou edite os cursos disponíveis.</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-4">
+      <a href="{% url 'listar_usuarios_admin' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+        <div class="card-body text-center">
+          <i class="fas fa-users fa-3x text-secondary mb-3"></i>
+          <h5 class="card-title fw-semibold">Gerir Utilizadores</h5>
+          <p class="text-muted">Controle o acesso e os dados dos usuários.</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-4">
+      <a href="{% url 'listar_salas_admin' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+        <div class="card-body text-center">
+          <i class="fas fa-school fa-3x text-warning mb-3"></i>
+          <h5 class="card-title fw-semibold">Salas de Aula</h5>
+          <p class="text-muted">Configure turmas e atribua professores.</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Bloco inferior -->
+    <div class="col-md-4">
+      <a href="{% url 'estatisticas_admin' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+        <div class="card-body text-center">
+          <i class="fas fa-chart-bar fa-3x text-success mb-3"></i>
+          <h5 class="card-title fw-semibold">Estatísticas</h5>
+          <p class="text-muted">Veja relatórios de desempenho e atividade.</p>
+        </div>
+      </a>
+    </div>
+
+ <div class="col-md-4">
+  <a href="{% url 'listar_pedidos' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+    <div class="card-body text-center">
+      <i class="fas fa-user-check fa-3x text-info mb-3"></i>
+      <h5 class="card-title fw-semibold">Gerir Submissões</h5>
+      <p class="text-muted">Aprovar ou rejeitar pedidos de matrícula de alunos.</p>
+    </div>
+  </a>
+</div>
+
+    <!-- NOVO BLOCO 1: Testes de Nivelamento -->
+<div class="col-md-4">
+  <a href="{% url 'gerir_testes_nivelamento' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+    <div class="card-body text-center">
+      <i class="fas fa-list-check fa-3x text-danger mb-3"></i>
+      <h5 class="card-title fw-semibold">Testes de Nivelamento</h5>
+      <p class="text-muted">Crie e edite perguntas para cada curso e nível.</p>
+    </div>
+  </a>
+</div>
+
+<!-- NOVO BLOCO 2: Reclamações e Contactos -->
+<div class="col-md-4">
+  <a href="{% url 'listar_mensagens_contato' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+    <div class="card-body text-center">
+      <i class="fas fa-envelope-open-text fa-3x text-warning mb-3"></i>
+      <h5 class="card-title fw-semibold">Mensagens e Contactos</h5>
+      <p class="text-muted">Veja feedbacks, reclamações ou sugestões dos usuários.</p>
+    </div>
+  </a>
+</div>
+
+<!-- NOVO BLOCO 3: Avaliação de Professores -->
+<div class="col-md-4">
+  <a href="{% url 'avaliar_professores_admin' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+    <div class="card-body text-center">
+      <i class="fas fa-star-half-alt fa-3x text-success mb-3"></i>
+      <h5 class="card-title fw-semibold">Avaliação de Professores</h5>
+      <p class="text-muted">Veja como os professores foram avaliados pelos alunos.</p>
+    </div>
+  </a>
+</div>
+
+<div class="col-md-4">
+  <a href="{% url 'painel_financeiro' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+    <div class="card-body text-center">
+      <i class="fas fa-money-check-alt fa-3x text-primary mb-3"></i>
+      <h5 class="card-title fw-semibold">Finanças</h5>
+      <p class="text-muted">Gerencie planos, preços e dados bancários.</p>
+    </div>
+  </a>
+</div>
+
+
+    <div class="col-md-4">
+      <a href="{% url 'home' %}" class="card card-hover border-0 shadow h-100 text-decoration-none">
+        <div class="card-body text-center">
+          <i class="fas fa-home fa-3x text-dark mb-3"></i>
+          <h5 class="card-title fw-semibold">Voltar ao Site</h5>
+          <p class="text-muted">Ir para a página inicial da plataforma.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Estilo e animação -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+.card-hover:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+</style>
+{% endblock %}

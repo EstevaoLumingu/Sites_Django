@@ -1,0 +1,104 @@
+{% load widget_tweaks %}
+
+<div class="modal fade" id="modalEnviarMaterial" tabindex="-1" aria-labelledby="modalEnviarMaterialLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'enviar_material' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="modalEnviarMaterialLabel"><i class="fas fa-upload"></i> Enviar Material</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="id_titulo" class="form-label">Título</label>
+            {{ form.titulo|add_class:"form-control" }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_categoria" class="form-label">Categoria</label>
+            {{ form.categoria|add_class:"form-select" }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_sala" class="form-label">Sala</label>
+            {{ form.sala|add_class:"form-select" }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_aula" class="form-label">Aula Relacionada</label>
+            {{ form.aula|add_class:"form-select" }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_arquivo" class="form-label">Arquivo</label>
+            {{ form.arquivo|add_class:"form-control" }}
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fas fa-paper-plane"></i> Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+.card:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const salaSelect = document.getElementById("id_sala");
+  const aulaSelect = document.getElementById("id_aula");
+
+  if (salaSelect && aulaSelect) {
+    aulaSelect.disabled = true;
+
+    salaSelect.addEventListener("change", function () {
+      const salaId = this.value;
+
+      if (!salaId) {
+        aulaSelect.innerHTML = "<option>Selecione uma sala primeiro</option>";
+        aulaSelect.disabled = true;
+        return;
+      }
+
+      aulaSelect.innerHTML = "<option>Carregando aulas...</option>";
+      aulaSelect.disabled = true;
+
+      fetch(`/aulas/ajax/aulas_por_sala/${salaId}/`)
+        .then(response => response.json())
+        .then(data => {
+          aulaSelect.innerHTML = "";
+
+          if (data.aulas.length > 0) {
+            aulaSelect.disabled = false;
+            data.aulas.forEach(aula => {
+              const opt = document.createElement("option");
+              opt.value = aula.id;
+              opt.textContent = aula.titulo;
+              aulaSelect.appendChild(opt);
+            });
+          } else {
+            aulaSelect.innerHTML = "<option>Nenhuma aula disponível</option>";
+            aulaSelect.disabled = true;
+          }
+        })
+        .catch(error => {
+          console.error("Erro ao buscar aulas:", error);
+          aulaSelect.innerHTML = "<option>Erro ao carregar</option>";
+          aulaSelect.disabled = true;
+        });
+    });
+  }
+});
+</script>

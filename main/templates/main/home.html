@@ -1,0 +1,199 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Bem-vindo à EAD Online{% endblock %}
+
+{% block content %}
+
+
+<!-- Carrossel de fundo com banner sobreposto -->
+<div id="heroCarrossel" class="position-relative mb-4">
+  <!-- Carrossel real -->
+  <div id="carrosselIA" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner rounded-3 shadow">
+      <div class="carousel-item active">
+        <img src="{{ MEDIA_URL }}carrossel/slide1.jpg" class="d-block w-100" alt="Slide 1">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ MEDIA_URL }}carrossel/slide2.jpg" class="d-block w-100" alt="Slide 2">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ MEDIA_URL }}carrossel/slide3.jpg" class="d-block w-100" alt="Slide 3">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ MEDIA_URL }}carrossel/slide4.jpg" class="d-block w-100" alt="Slide 3">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrosselIA" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carrosselIA" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Banner central + botão -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white p-3">
+   <h3 id="typewriter" class="display-5 mb-3"></h3>
+    <p class="lead mb-4">Cursos interativos, aulas em vídeo e professores ao vivo. Começa já!</p>
+
+    <a href="{% url 'cursos_disponiveis' %}" class="btn btn-primary btn-lg shadow">
+      <i class="fas fa-graduation-cap"></i> Ver Cursos
+    </a>
+  </div>
+</div>
+
+<!-- Secção Destaques com Cards reais -->
+<section id="destaques" class="container my-3">
+  <div class="text-center mb-5" >
+    <h2 class="fw-bold"> O que você encontra aqui?</h2>
+    <p class="text-muted">Recursos exclusivos para facilitar sua aprendizagem online.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-4" data-aos="zoom-in-up">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ MEDIA_URL }}destaques/d1.jpg" class="card-img-top" alt="Professores ao Vivo">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-chalkboard-teacher text-primary"></i> Professores ao Vivo</h5>
+          <p class="card-text">Participe de aulas em tempo real, interaja e receba suporte individualizado de professores especializados.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in-up">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ MEDIA_URL }}destaques/d2.jpg" class="card-img-top" alt="Plataforma Moderna">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-laptop-code text-success"></i> Plataforma Moderna</h5>
+          <p class="card-text">Acesse aulas e materiais didáticos de qualquer lugar, em qualquer dispositivo. Totalmente responsivo e seguro.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in-up">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ MEDIA_URL }}destaques/d3.jpg" class="card-img-top" alt="Vídeo Aulas Gravadas">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-video text-danger"></i> Vídeo Aulas Gravadas</h5>
+          <p class="card-text">Revise suas aulas a qualquer hora, faça anotações e aprenda no seu ritmo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mural de Informações -->
+<section id="mural" class="container my-5">
+  <div class="text-center mb-4" data-aos="fade-up">
+    <h2 class="fw-bold">Por que aprender inglês com a Fluent Bridge English?</h2>
+    <p class="text-muted">Desbloqueie oportunidades, conecte-se ao mundo e fale com confiança.</p>
+  </div>
+  <div class="row text-center g-4">
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h5 class="fw-bold"><i class="fas fa-globe text-primary"></i> +200 Países</h5>
+        <p>Fale inglês e comunique-se com pessoas de todo o mundo sem barreiras.</p>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h5 class="fw-bold"><i class="fas fa-briefcase text-success"></i> Oportunidades Profissionais</h5>
+        <p>Tenha acesso às melhores vagas de emprego e crescimento internacional.</p>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h5 class="fw-bold"><i class="fas fa-book-reader text-danger"></i> Aprenda no seu ritmo</h5>
+        <p>Estude de forma flexível, com professores ao vivo e materiais gravados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Estilos adicionais -->
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .carousel-inner img {
+    object-fit: cover;
+    height: 450px;
+  }
+
+  a.btn-primary {
+    background: #00ccff;
+    border: none;
+  }
+
+  a.btn-primary:hover {
+    background: #0088ff;
+  }
+
+  .hover-zoom {
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  .hover-zoom:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+#typewriter {
+  border-right: 2px solid #fff; 
+  padding-right: 5px;
+  display: inline-block;
+}
+
+#destaques .card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#destaques .card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+#mural h5 {
+  font-size: 1.2rem;
+}
+
+#mural p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var typewriter = new Typewriter('#typewriter', {
+      loop: true,
+      delay: 40,
+    });
+
+    typewriter
+      .typeString('Aprende Inglês ao teu ritmo, onde e quando quiseres')
+      .pauseFor(2000)
+      .deleteAll()
+      .typeString('Estuda online com professores ao vivo')
+      .pauseFor(2000)
+      .deleteAll()
+      .typeString('Cursos interativos, no teu ritmo')
+      .pauseFor(2000)
+      .deleteAll()
+      .start();
+  });
+
+  AOS.init({
+    duration: 1000, // animações mais suaves
+    once: false, // repetir animações se quiser
+  });
+</script>
+
+<script src="https://unpkg.com/typewriter-effect@2.18.0/dist/core.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+
+
+{% endblock %}

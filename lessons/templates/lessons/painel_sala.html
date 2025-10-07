@@ -1,0 +1,146 @@
+{% extends "main/base.html" %}
+{% block title %}Painel da Sala{% endblock %}
+{% load widget_tweaks %}
+{% load participacao_tags %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-primary"><i class="fas fa-door-open"></i> Sala: {{ sala.titulo }}</h2>
+  <p class="text-muted">Curso: {{ sala.curso.nome }} | Nível: {{ sala.get_nivel_display }}</p>
+
+  {% if user.categoria == 'professor' %}
+    <div class="mb-4">
+      <a href="{% url 'criar_aula' %}?sala_id={{ sala.id }}" class="btn btn-success me-2">
+        <i class="fas fa-video"></i> Criar Aula ao Vivo
+      </a>
+      <a href="{% url 'aulas_por_sala' sala.id %}" class="btn btn-outline-secondary me-2">
+        <i class="fas fa-list"></i> Ver Aulas Marcadas
+      </a>
+      <a href="{% url 'painel_materiais' sala.id %}" class="btn btn-outline-dark">
+        <i class="fas fa-folder-open"></i> Ver Material Didático
+      </a>
+
+      {% if aulas %}
+        <a href="{% url 'avaliar_participacao' aulas.0.id %}" class="btn btn-outline-primary">
+          <i class="fas fa-star"></i> Avaliar Alunos
+        </a>
+      {% else %}
+        <span class="text-muted">Nenhuma aula criada ainda.</span>
+      {% endif %}
+    </div>
+  {% elif user.categoria == 'estudante' %}
+    <div class="mb-4">
+      {% if aulas %}
+        <a href="{% url 'entrar_aula' aulas.0.slug_sala %}" class="btn btn-primary me-2">
+          <i class="fas fa-door-open"></i> Acessar Aula ao Vivo
+        </a>
+        <a href="{% url 'painel_materiais' sala.id %}" class="btn btn-outline-dark">
+      <i class="fas fa-folder-open"></i> Ver Material Didático
+    </a>
+
+      {% endif %}
+      <a href="{% url 'aulas_por_sala' sala.id %}" class="btn btn-outline-secondary me-2">
+        <i class="fas fa-clock"></i> Aulas Marcadas pelo professor
+      </a>
+
+    <!-- Botão para abrir modal de avaliação -->
+      <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#avaliarProfessorModal">
+        <i class="fas fa-star-half-alt"></i> Avaliar Professor
+      </button>
+    
+    </div>
+
+<!-- Modal de Avaliação -->
+<div class="modal fade" id="avaliarProfessorModal" tabindex="-1" aria-labelledby="avaliarProfessorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'avaliar_professor' sala.professor.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="avaliarProfessorModalLabel"><i class="fas fa-star"></i> Avaliar Professor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Professor:</strong> {{ sala.professor.get_full_name|default:sala.professor.username }}</p>
+
+          <div class="mb-3">
+            <label for="nota" class="form-label">Nota (0 a 10)</label>
+            <input type="number" name="nota" id="nota" class="form-control" min="0" max="10" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="comentario" class="form-label">Comentário</label>
+            <textarea name="comentario" id="comentario" rows="3" class="form-control" placeholder="Deixe seu feedback..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fas fa-paper-plane"></i> Enviar Avaliação
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  {% endif %}
+
+
+  
+  <hr>
+  <h4 class="text-secondary mt-4"><i class="fas fa-book-reader"></i> Histórico de Aulas Dadas</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Data</th>
+          {% if user.categoria == 'estudante' %}
+            <th>Presença</th>
+            <th>Avaliação</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for aula in aulas %}
+        <tr>
+          <td>{{ aula.titulo }}</td>
+          <td>{{ aula.horario|date:"d/m/Y H:i" }}</td>
+          {% if user.categoria == 'estudante' %}
+            {% with participacoes|dictkey:aula.id as p %}
+              <td>
+                {% if p %}
+                  {% if p.presente %}
+                    <span class="badge bg-success">Presente</span>
+                  {% else %}
+                    <span class="badge bg-danger">Ausente</span>
+                  {% endif %}
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if p %}
+                  {% if p.avaliacao %}
+                    <span class="badge bg-info text-dark">{{ p.get_avaliacao_display }}</span>
+                  {% else %}
+                    <span class="text-muted">Não avaliado</span>
+                  {% endif %}
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+            {% endwith %}
+          {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="text-center text-muted">Nenhuma aula registrada ainda.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

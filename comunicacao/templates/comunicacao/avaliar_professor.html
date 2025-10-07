@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+{% block title %}Avaliar Professor{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Avaliar {{ professor.get_full_name|default:professor.username }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="nota">Nota (1 a 5):</label>
+      <select name="nota" class="form-control" required>
+        {% for i in "12345" %}
+        <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="comentario">Comentário:</label>
+      <textarea name="comentario" class="form-control" rows="4" required></textarea>
+    </div>
+    <button class="btn btn-success">Enviar Avaliação</button>
+  </form>
+</div>
+{% endblock %}

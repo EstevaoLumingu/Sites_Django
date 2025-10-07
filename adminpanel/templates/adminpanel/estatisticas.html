@@ -1,0 +1,93 @@
+{% extends "main/base.html" %}
+{% block title %}📊 Estatísticas do Sistema{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">📊 Estatísticas do Sistema</h2>
+
+  <div class="row g-3 text-center">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>👥 Utilizadores</h5>
+          <h2>{{ total_usuarios }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>🧑‍🏫 Professores</h5>
+          <h2>{{ total_professores }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>🎓 Estudantes</h5>
+          <h2>{{ total_estudantes }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>📚 Cursos</h5>
+          <h2>{{ total_cursos }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>🏫 Salas</h5>
+          <h2>{{ total_salas }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>📡 Aulas</h5>
+          <h2>{{ total_aulas }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <h4 class="text-center">📈 Novos Utilizadores por Mês</h4>
+  <canvas id="chartUsuarios" height="100"></canvas>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('chartUsuarios').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: {{ chart_labels|safe }},
+    datasets: [{
+      label: 'Novos Utilizadores',
+      data: {{ chart_data|safe }},
+      backgroundColor: 'rgba(0, 123, 255, 0.6)'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { stepSize: 1 }
+      }
+    }
+  }
+});
+</script>
+{% endblock %}
